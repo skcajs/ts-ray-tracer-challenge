@@ -1,6 +1,6 @@
 // customMatchers.ts
 
-import { expect } from 'vitest'
+import {expect} from 'vitest'
 
 expect.extend({
     toApproximatelyEqual(received, expected, epsilon = 1e-6) {

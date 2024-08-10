@@ -1,6 +1,6 @@
 import './style.css'
 import Canvas from './canvas.ts'
-import Examples from "./controller/examples.ts";
+import Examples from "./examples.ts";
 
 
 main();

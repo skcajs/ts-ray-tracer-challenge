@@ -1,7 +1,8 @@
 import {rotation, scaling, shearing, Transformation, translation} from "./transformations.ts";
 
 export default class Tuple implements Transformation {
-    constructor(public x: number = 0, public y: number = 0, public z: number = 0, public w: number = 0) {}
+    constructor(public x: number = 0, public y: number = 0, public z: number = 0, public w: number = 0) {
+    }
 
     add(other: Tuple): Tuple {
         return new Tuple(this.x + other.x, this.y + other.y, this.z + other.z, this.w + other.w);
@@ -15,6 +16,10 @@ export default class Tuple implements Transformation {
         return new Tuple(this.x * other, this.y * other, this.z * other, this.w * other);
     }
 
+    multiplyTuple(other: Tuple): Tuple {
+        return new Tuple(this.x * other.x, this.y * other.y, this.z * other.z, this.w * other.w);
+    }
+
     divide(other: number): Tuple {
         return new Tuple(this.x / other, this.y / other, this.z / other, this.w / other);
     }
@@ -23,15 +28,15 @@ export default class Tuple implements Transformation {
         return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2) + Math.pow(this.w, 2));
     }
 
-    normalize() : Tuple {
-        return new Tuple(this.x/this.magnitude(), this.y/this.magnitude(), this.z/this.magnitude(), this.w/this.magnitude());
+    normalize(): Tuple {
+        return new Tuple(this.x / this.magnitude(), this.y / this.magnitude(), this.z / this.magnitude(), this.w / this.magnitude());
     }
 
-    dot(other: Tuple) : number {
+    dot(other: Tuple): number {
         return this.x * other.x + this.y * other.y + this.z * other.z + other.w * other.w * other.w;
     }
 
-    cross(other: Tuple) : Tuple {
+    cross(other: Tuple): Tuple {
         return new Tuple(this.y * other.z - this.z * other.y,
             this.z * other.x - this.x * other.z,
             this.x * other.y - this.y * other.x);
@@ -41,7 +46,7 @@ export default class Tuple implements Transformation {
         return rotation(axis, angle).multiplyTuple(this);
     }
 
-    scale(tx:number, ty:number, tz:number): Tuple {
+    scale(tx: number, ty: number, tz: number): Tuple {
         return scaling(tx, ty, tz).multiplyTuple(this);
     }
 
@@ -52,43 +57,97 @@ export default class Tuple implements Transformation {
     translate(tx: number, ty: number, tz: number): Tuple {
         return translation(tx, ty, tz).multiplyTuple(this);
     }
-}
 
-export class Color {
-    constructor(
-        public r: number = 0,
-        public g: number = 0,
-        public b: number = 0,
-        public a: number = 1
-    ) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
+    reflect(normal: Tuple): Tuple {
+        return this.subtract(normal.multiply(2).multiply(this.dot(normal)));
     }
 
-    data() : number[] {
+    /* Color Specific functions */
+
+    get r(): number {
+        return this.x;
+    }
+
+    set r(value: number) {
+        this.x = value;
+    }
+
+    // Getter and setter for green (maps to y)
+    get g(): number {
+        return this.y;
+    }
+
+    set g(value: number) {
+        this.y = value;
+    }
+
+    // Getter and setter for blue (maps to z)
+    get b(): number {
+        return this.z;
+    }
+
+    set b(value: number) {
+        this.z = value;
+    }
+
+    get a(): number {
+        return this.w;
+    }
+
+    set a(value: number) {
+        this.w = value;
+    }
+
+    data(): number[] {
         return [
-            this.r * 255,
-            this.g * 255,
-            this.b * 255,
-            this.a * 255,
+            this.x * 255,
+            this.y * 255,
+            this.z * 255,
+            this.w * 255,
         ]
     }
 }
 
 export function makePoint(x: number, y: number, z: number): Tuple {
-    return new Tuple(x,y,z,1);
+    return new Tuple(x, y, z, 1);
 }
 
 export function makeVector(x: number, y: number, z: number): Tuple {
-    return new Tuple(x,y,z,0);
+    return new Tuple(x, y, z, 0);
 }
 
 export function makeUnitVector(x: number, y: number, z: number): Tuple {
-    return new Tuple(x,y,z,0).normalize();
+    return new Tuple(x, y, z, 0).normalize();
 }
 
-export function makeColor(r: number, g: number, b: number, a: number = 1.0): Color {
-    return new Color(r,g,b,a);
+export function makeColor(r: number, g: number, b: number, a: number = 1.0): Tuple {
+    return new Tuple(r, g, b, a);
+}
+
+export function parseColor(t: Tuple): Tuple {
+    return new Tuple(t.x, t.y, t.z, 1.0);
+}
+
+export function makeBlack(): Tuple {
+    return new Tuple(0, 0, 0, 1);
+}
+
+export function makeWhite(): Tuple {
+    return new Tuple(1, 1, 1, 1);
+}
+
+export function makeRed(): Tuple {
+    return new Tuple(1, 0, 0, 1);
+}
+
+export function makeGreen(): Tuple {
+    return new Tuple(0, 1, 0, 1);
+}
+
+export function makeBlue(): Tuple {
+    return new Tuple(0, 0, 1, 1);
+}
+
+export function makePurple(): Tuple {
+    return new Tuple(1, 0, 1, 1);
 }

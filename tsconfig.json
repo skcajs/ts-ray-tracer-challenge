@@ -19,5 +19,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/test/vitest.d.ts"]
+  "include": ["src",
+    "src/test/vitest.d.ts"
+  ]
 }

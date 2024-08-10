@@ -1,15 +1,18 @@
 import Ray from "./ray.ts";
-import Tuple, {makePoint} from "./tuple.ts";
+import Tuple, {makePoint, makeVector} from "./tuple.ts";
 import Intersection from "./intersection.ts";
 import Intersections from "./intersections.ts";
 import Matrix from "./matrix.ts";
+import {makeMaterial} from "./material.ts";
 
 export default class Sphere {
 
     transform;
+    material;
 
-    constructor(public origin: Tuple = makePoint(0,0,0), public radius: number = 1.0) {
+    constructor(public origin: Tuple = makePoint(0, 0, 0), public radius: number = 1.0) {
         this.transform = Matrix.Identity();
+        this.material = makeMaterial();
     }
 
     intersect(ray: Ray): Intersections {
@@ -20,7 +23,7 @@ export default class Sphere {
         const b = 2 * rayT.direction.dot(sphereToRay);
         const c = sphereToRay.dot(sphereToRay) - 1;
 
-        const discriminant = Math.pow(b,2) - 4 * a * c;
+        const discriminant = Math.pow(b, 2) - 4 * a * c;
         if (discriminant < 0) return new Intersections();
 
         return new Intersections(
@@ -31,5 +34,12 @@ export default class Sphere {
 
     setTransform(t: Matrix) {
         this.transform = t;
+    }
+
+    normalAt(p: Tuple): Tuple {
+        const pObject = this.transform.inverse().multiplyTuple(p);
+        const pObjectNormal = pObject.subtract(this.origin);
+        const pWorld = this.transform.inverse().transpose().multiplyTuple(pObjectNormal);
+        return makeVector(pWorld.x, pWorld.y, pWorld.z).normalize();
     }
 }
