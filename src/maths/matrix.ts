@@ -1,11 +1,11 @@
-import Tuple from './tuple';
+import Tuple from './tuple.ts';
 import {rotation, scaling, shearing, Transformation, translation} from "./transformations.ts";
 
 export default class Matrix implements Transformation {
-    private readonly elements: number[][];
+    readonly elements: number[][];
 
     constructor(data: number[][]) {
-        if ([2,3,4].includes(data.length) && data.every(row => row.length === data.length)) {
+        if ([2, 3, 4].includes(data.length) && data.every(row => row.length === data.length)) {
             this.elements = data;
         } else {
             throw new Error("Data must be a 4x4, 3x3, or 2x2 matrix.");
@@ -89,7 +89,7 @@ export default class Matrix implements Transformation {
 
     subMatrix(row: number, col: number): Matrix {
         const size = this.elements.length;
-        const result = Matrix.Identity(size-1);
+        const result = Matrix.Identity(size - 1);
         let x = 0;
         for (let i = 0; i < size; i++) {
             if (i === row) continue;
@@ -136,15 +136,15 @@ export default class Matrix implements Transformation {
     }
 
     static Identity(size: number = 4): Matrix {
-        return new Matrix(Array.from({ length: size }, (_, i) =>
-            Array.from({ length: size }, (_, j) => (i === j ? 1.0 : 0.0))));
+        return new Matrix(Array.from({length: size}, (_, i) =>
+            Array.from({length: size}, (_, j) => (i === j ? 1.0 : 0.0))));
     }
 
     rotate(axis: number, angle: number): Matrix {
         return rotation(axis, angle).multiply(this);
     }
 
-    scale(tx:number, ty:number, tz:number): Matrix {
+    scale(tx: number, ty: number, tz: number): Matrix {
         return scaling(tx, ty, tz).multiply(this);
     }
 

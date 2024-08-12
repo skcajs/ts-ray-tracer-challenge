@@ -62,7 +62,7 @@ export default class Tuple implements Transformation {
         return this.subtract(normal.multiply(2).multiply(this.dot(normal)));
     }
 
-    /* Color Specific functions */
+    /* Colour Specific functions */
 
     get r(): number {
         return this.x;
@@ -72,7 +72,6 @@ export default class Tuple implements Transformation {
         this.x = value;
     }
 
-    // Getter and setter for green (maps to y)
     get g(): number {
         return this.y;
     }
@@ -81,7 +80,6 @@ export default class Tuple implements Transformation {
         this.y = value;
     }
 
-    // Getter and setter for blue (maps to z)
     get b(): number {
         return this.z;
     }
@@ -108,19 +106,19 @@ export default class Tuple implements Transformation {
     }
 }
 
-export function makePoint(x: number, y: number, z: number): Tuple {
+export function point(x: number, y: number, z: number): Tuple {
     return new Tuple(x, y, z, 1);
 }
 
-export function makeVector(x: number, y: number, z: number): Tuple {
+export function vector(x: number, y: number, z: number): Tuple {
     return new Tuple(x, y, z, 0);
 }
 
-export function makeUnitVector(x: number, y: number, z: number): Tuple {
+export function unitVector(x: number, y: number, z: number): Tuple {
     return new Tuple(x, y, z, 0).normalize();
 }
 
-export function makeColor(r: number, g: number, b: number, a: number = 1.0): Tuple {
+export function colour(r: number, g: number, b: number, a: number = 1.0): Tuple {
     return new Tuple(r, g, b, a);
 }
 
@@ -128,26 +126,26 @@ export function parseColor(t: Tuple): Tuple {
     return new Tuple(t.x, t.y, t.z, 1.0);
 }
 
-export function makeBlack(): Tuple {
+export function black(): Tuple {
     return new Tuple(0, 0, 0, 1);
 }
 
-export function makeWhite(): Tuple {
+export function white(): Tuple {
     return new Tuple(1, 1, 1, 1);
 }
 
-export function makeRed(): Tuple {
+export function red(): Tuple {
     return new Tuple(1, 0, 0, 1);
 }
 
-export function makeGreen(): Tuple {
+export function green(): Tuple {
     return new Tuple(0, 1, 0, 1);
 }
 
-export function makeBlue(): Tuple {
+export function blue(): Tuple {
     return new Tuple(0, 0, 1, 1);
 }
 
-export function makePurple(): Tuple {
+export function purple(): Tuple {
     return new Tuple(1, 0, 1, 1);
 }

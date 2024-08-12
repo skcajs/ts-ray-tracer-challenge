@@ -1,8 +1,8 @@
 import Ray from "./ray.ts";
-import Tuple, {makePoint, makeVector} from "./tuple.ts";
+import Tuple, {point, vector} from "./maths/tuple.ts";
 import Intersection from "./intersection.ts";
 import Intersections from "./intersections.ts";
-import Matrix from "./matrix.ts";
+import Matrix from "./maths/matrix.ts";
 import {makeMaterial} from "./material.ts";
 
 export default class Sphere {
@@ -10,7 +10,7 @@ export default class Sphere {
     transform;
     material;
 
-    constructor(public origin: Tuple = makePoint(0, 0, 0), public radius: number = 1.0) {
+    constructor(public origin: Tuple = point(0, 0, 0), public radius: number = 1.0) {
         this.transform = Matrix.Identity();
         this.material = makeMaterial();
     }
@@ -40,6 +40,6 @@ export default class Sphere {
         const pObject = this.transform.inverse().multiplyTuple(p);
         const pObjectNormal = pObject.subtract(this.origin);
         const pWorld = this.transform.inverse().transpose().multiplyTuple(pObjectNormal);
-        return makeVector(pWorld.x, pWorld.y, pWorld.z).normalize();
+        return vector(pWorld.x, pWorld.y, pWorld.z).normalize();
     }
 }

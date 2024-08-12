@@ -1,4 +1,4 @@
-import {Color} from "./tuple.ts";
+import Tuple from "./maths/tuple.ts";
 
 export default class Canvas {
     canvas: HTMLCanvasElement;
@@ -33,7 +33,7 @@ export default class Canvas {
         this.canvas.height = height;
     }
 
-    drawPixel(x: number, y: number, color: Color, pixelSize: number = 1) {
+    drawPixel(x: number, y: number, color: Tuple, pixelSize: number = 1) {
         const imageData = this.ctx.createImageData(pixelSize, pixelSize); // 1x1 pixel
         const data = imageData.data;
 
@@ -43,7 +43,7 @@ export default class Canvas {
             data[i + 2] = color.b * 255; // Blue channel
             data[i + 3] = color.a * 255; // Alpha channel
         }
-        this.ctx.putImageData(imageData, x + (this.canvas.width/ 2), y + (this.canvas.height/ 2));
+        this.ctx.putImageData(imageData, x + (this.canvas.width / 2), y + (this.canvas.height / 2));
     }
 
     drawImage(image: number[]) {

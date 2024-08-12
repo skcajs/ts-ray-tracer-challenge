@@ -1,64 +1,60 @@
-import { expect, test } from 'vitest'
-import Tuple from '../tuple.ts'
-import Matrix from '../matrix.ts'
-
-test('', () => {
-
-});
+import {expect, test} from 'vitest'
+import Tuple from '../maths/tuple.ts'
+import Matrix from '../maths/matrix.ts'
 
 test('Constructing and inspecting a 4x4 matrix', () => {
     const elements = [
-        [1,2,3,4],
-        [5.5,6.5,7.5,8.5],
-        [9,10,11,12],
-        [13.5,14.5,15.5,16.5]
+        [1, 2, 3, 4],
+        [5.5, 6.5, 7.5, 8.5],
+        [9, 10, 11, 12],
+        [13.5, 14.5, 15.5, 16.5]
     ];
 
     const matrix = new Matrix(elements);
 
-    expect(matrix.getElement(0,0)).toBe(1);
-    expect(matrix.getElement(0,3)).toBe(4);
-    expect(matrix.getElement(1,0)).toBe(5.5);
-    expect(matrix.getElement(1,2)).toBe(7.5);
-    expect(matrix.getElement(2,2)).toBe(11);
-    expect(matrix.getElement(3,0)).toBe(13.5);
-    expect(matrix.getElement(3,2)).toBe(15.5);
+    expect(matrix.getElement(0, 0)).toBe(1);
+    expect(matrix.getElement(0, 3)).toBe(4);
+    expect(matrix.getElement(1, 0)).toBe(5.5);
+    expect(matrix.getElement(1, 2)).toBe(7.5);
+    expect(matrix.getElement(2, 2)).toBe(11);
+    expect(matrix.getElement(3, 0)).toBe(13.5);
+    expect(matrix.getElement(3, 2)).toBe(15.5);
 });
 
 test('A 3x3 matrix ought to be representable', () => {
     const elements = [
-        [-3,5,0],
-        [1,-2,-7],
-        [0,1,1]
+        [-3, 5, 0],
+        [1, -2, -7],
+        [0, 1, 1]
     ];
 
     const matrix = new Matrix(elements);
 
-    expect(matrix.getElement(0,0)).toBe(-3);
-    expect(matrix.getElement(1,1)).toBe(-2);
-    expect(matrix.getElement(2,2)).toBe(1);
+    expect(matrix.getElement(0, 0)).toBe(-3);
+    expect(matrix.getElement(1, 1)).toBe(-2);
+    expect(matrix.getElement(2, 2)).toBe(1);
 });
 
 test('A 2x2 matrix ought to be representable', () => {
     const elements = [
-        [-3,5],
-        [1,-2]
+        [-3, 5],
+        [1, -2]
     ];
 
     const matrix = new Matrix(elements);
 
-    expect(matrix.getElement(0,0)).toBe(-3);
-    expect(matrix.getElement(0,1)).toBe(5);
-    expect(matrix.getElement(1,0)).toBe(1);
-    expect(matrix.getElement(1,1)).toBe(-2);
+    expect(matrix.getElement(0, 0)).toBe(-3);
+    expect(matrix.getElement(0, 1)).toBe(5);
+    expect(matrix.getElement(1, 0)).toBe(1);
+    expect(matrix.getElement(1, 1)).toBe(-2);
 });
 
 test('Matrix equality with identical matrices', () => {
     const elements = [
-        [1,2,3,4],
-        [5,6,7,8],
-        [9,10,11,12],
-        [13,14,15,16]
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+        [13, 14, 15, 16]
     ];
 
     const matrix1 = new Matrix(elements);
@@ -69,17 +65,17 @@ test('Matrix equality with identical matrices', () => {
 
 test('Matrix equality with different matrices', () => {
     const elements1 = [
-        [1,2,3,4],
-        [5,6,7,8],
-        [9,10,11,12],
-        [13,14,15,16]
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+        [13, 14, 15, 16]
     ];
 
     const elements2 = [
-        [2,3,4,5],
-        [6,7,8,9],
-        [10,11,12,13],
-        [14,15,16,17]
+        [2, 3, 4, 5],
+        [6, 7, 8, 9],
+        [10, 11, 12, 13],
+        [14, 15, 16, 17]
     ];
 
     const matrix1 = new Matrix(elements1);
@@ -126,9 +122,9 @@ test('A matrix multiplied by a tuple', () => {
     ];
 
     const matrix = new Matrix(A);
-    const tuple = new Tuple(1,2,3,1);
+    const tuple = new Tuple(1, 2, 3, 1);
 
-    const result = new Tuple(18,24,33,1);
+    const result = new Tuple(18, 24, 33, 1);
 
     expect(matrix.multiplyTuple(tuple)).toEqual(result);
 });
@@ -192,7 +188,7 @@ test('A sub-matrix of a 3x3 matrix is a 2x2 matrix', () => {
         [0, 6]
     ]);
 
-    expect(matrix.subMatrix(0,2)).toEqual(subMatrix);
+    expect(matrix.subMatrix(0, 2)).toEqual(subMatrix);
 });
 
 test('A subMatrix of a 4x4 matrix is a 3x3 matrix', () => {
@@ -209,7 +205,7 @@ test('A subMatrix of a 4x4 matrix is a 3x3 matrix', () => {
         [-7, -1, 1]
     ]);
 
-    expect(A.subMatrix(2,1)).toEqual(subMatrixA);
+    expect(A.subMatrix(2, 1)).toEqual(subMatrixA);
 });
 
 test('Calculate the minor of a 3x3 matrix', () => {
@@ -219,10 +215,10 @@ test('Calculate the minor of a 3x3 matrix', () => {
         [6, -1, 5]
     ]);
 
-    const B = A.subMatrix(1,0);
+    const B = A.subMatrix(1, 0);
 
     expect(B.determinant()).toBe(25);
-    expect(A.minor(1,0)).toBe(25);
+    expect(A.minor(1, 0)).toBe(25);
 });
 
 test('Calculating the cofactor of a 3x3 matrix', () => {
@@ -232,10 +228,10 @@ test('Calculating the cofactor of a 3x3 matrix', () => {
         [6, -1, 5]
     ]);
 
-    expect(A.minor(0,0)).toBe(-12);
-    expect(A.cofactor(0,0)).toBe(-12);
-    expect(A.minor(1,0)).toBe(25);
-    expect(A.cofactor(1,0)).toBe(-25);
+    expect(A.minor(0, 0)).toBe(-12);
+    expect(A.cofactor(0, 0)).toBe(-12);
+    expect(A.minor(1, 0)).toBe(25);
+    expect(A.cofactor(1, 0)).toBe(-25);
 });
 
 test('Calculating the determinant of a 3x3 matrix', () => {
@@ -245,9 +241,9 @@ test('Calculating the determinant of a 3x3 matrix', () => {
         [2, 6, 4]
     ]);
 
-    expect(A.cofactor(0,0)).toBe(56);
-    expect(A.cofactor(0,1)).toBe(12);
-    expect(A.minor(0,2)).toBe(-46);
+    expect(A.cofactor(0, 0)).toBe(56);
+    expect(A.cofactor(0, 1)).toBe(12);
+    expect(A.minor(0, 2)).toBe(-46);
     expect(A.determinant()).toBe(-196);
 });
 
@@ -259,10 +255,10 @@ test('Calculating the determinant of a 4x4 matrix', () => {
         [-6, 7, 7, -9]
     ]);
 
-    expect(A.cofactor(0,0)).toBe(690);
-    expect(A.cofactor(0,1)).toBe(447);
-    expect(A.minor(0,2)).toBe(210);
-    expect(A.minor(0,3)).toBe(-51);
+    expect(A.cofactor(0, 0)).toBe(690);
+    expect(A.cofactor(0, 1)).toBe(447);
+    expect(A.minor(0, 2)).toBe(210);
+    expect(A.minor(0, 3)).toBe(-51);
     expect(A.determinant()).toBe(-4071);
 });
 
@@ -307,10 +303,10 @@ test('Calculating the inverse of a matrix', () => {
     ]);
 
     expect(A.determinant()).toBe(532);
-    expect(A.cofactor(2,3)).toBe(-160);
-    expect(B.getElement(3,2)).toBe(-160/532);
-    expect(A.cofactor(3,2)).toBe(105);
-    expect(B.getElement(2,3)).toBe(105/532);
+    expect(A.cofactor(2, 3)).toBe(-160);
+    expect(B.getElement(3, 2)).toBe(-160 / 532);
+    expect(A.cofactor(3, 2)).toBe(105);
+    expect(B.getElement(2, 3)).toBe(105 / 532);
     expect(B.equals(result)).toBeTruthy();
 });
 
