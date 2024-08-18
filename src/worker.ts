@@ -3,6 +3,7 @@ import spheres from "./scenes/spheres.ts";
 import Matrix from "./maths/matrix.ts";
 
 self.onmessage = (event) => {
+
     const {width, height, fieldOfView, transform} = event.data;
 
     const world = spheres();
