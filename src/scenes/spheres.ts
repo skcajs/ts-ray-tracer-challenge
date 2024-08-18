@@ -1,13 +1,11 @@
-import Canvas from "../canvas.ts";
 import Sphere from "../sphere.ts";
-import {rotation, scaling, translation, viewTransform} from "../maths/transformations.ts";
+import {rotation, scaling, translation} from "../maths/transformations.ts";
 import Material from "../material.ts";
-import {colour, point, vector} from "../maths/tuple.ts";
+import {colour, point} from "../maths/tuple.ts";
 import {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
-import {camera} from "../camera.ts";
 
-const sphereScene = (canvas: Canvas) => {
+const sphereScene = () => {
 
     const floor = new Sphere();
     floor.transform = scaling(10, 0.1, 10);
@@ -54,10 +52,7 @@ const sphereScene = (canvas: Canvas) => {
     world.light = new PointLight(point(-10, 10, -10), colour(1, 1, 1));
     world.objects = [floor, leftWall, rightWall, middle, right, left];
 
-    const cam = camera(canvas.getWidth(), canvas.getHeight(), Math.PI / 3);
-    cam.transform = viewTransform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0));
-
-    canvas.drawImage(cam.render(world));
+    return world;
 }
 
 export default sphereScene;
