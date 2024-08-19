@@ -48,6 +48,17 @@ class Camera {
         }
         return image;
     };
+
+    renderChunk(world: World, startY: number, endY: number): number[] {
+        const image: number[] = []
+
+        for (let y = startY; y < endY; y++) {
+            for (let x = 0; x < this.hSize; x++) {
+                image.push(...world.colorAt(this.rayForPixel(x, y)).data());
+            }
+        }
+        return image;
+    };
 }
 
 export const camera = (hSize: number, vSize: number, fieldOfView: number) => {

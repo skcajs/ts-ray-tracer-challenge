@@ -46,9 +46,9 @@ export default class Canvas {
         this.ctx.putImageData(imageData, x + (this.canvas.width / 2), y + (this.canvas.height / 2));
     }
 
-    drawImage(image: number[]) {
+    drawImage(image: number[], dy: number = 0) {
         const imageData = this.ctx.createImageData(this.getWidth(), this.getHeight());
         imageData.data.set(image);
-        this.ctx.putImageData(imageData, 0, 0);
+        this.ctx.putImageData(imageData, 0, dy);
     }
 }
