@@ -10,7 +10,7 @@ function main() {
         document.querySelector<HTMLCanvasElement>('#canvas')!,
         100, 50);
 
-    const worker = new Worker(new URL('./worker.ts', import.meta.url));
+    const worker = new Worker(new URL('./worker.ts', import.meta.url), {type: 'module'});
 
     const transform = viewTransform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0))
 
