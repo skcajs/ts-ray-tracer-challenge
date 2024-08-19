@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest'
-import {colour, point} from "../maths/tuple.ts";
+import {colour, point} from "../tuple.ts";
 import PointLight from "../light.ts";
 
 test('A point light has a position and intensity', () => {

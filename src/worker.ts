@@ -1,6 +1,6 @@
 import {camera} from "./camera.ts";
 import spheres from "./scenes/spheres.ts";
-import Matrix from "./maths/matrix.ts";
+import Matrix from "./matrix.ts";
 
 self.onmessage = (event) => {
 

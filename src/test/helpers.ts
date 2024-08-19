@@ -1,6 +1,6 @@
 import {expect} from "vitest";
-import Tuple from "../maths/tuple.ts";
-import Matrix from "../maths/matrix.ts";
+import Tuple from "../tuple.ts";
+import Matrix from "../matrix.ts";
 
 export function compareTuples(expected: Tuple, received: Tuple) {
     expect(received.x).toBeCloseTo(expected.x);

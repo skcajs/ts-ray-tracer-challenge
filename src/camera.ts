@@ -1,6 +1,6 @@
-import {identity} from "./maths/transformations.ts";
+import {identity} from "./transformations.ts";
 import Ray from "./ray.ts";
-import {point} from "./maths/tuple.ts";
+import {point} from "./tuple.ts";
 import World from "./world.ts";
 
 class Camera {

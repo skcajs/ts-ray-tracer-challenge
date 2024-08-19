@@ -1,7 +1,7 @@
 import './style.css'
 import Canvas from './canvas.ts'
-import {viewTransform} from "./maths/transformations.ts";
-import {point, vector} from "./maths/tuple.ts";
+import {viewTransform} from "./transformations.ts";
+import {point, vector} from "./tuple.ts";
 
 main();
 
@@ -12,9 +12,7 @@ function main() {
 
     const numWorkers = navigator.hardwareConcurrency || 4;
     const chunkSize = Math.ceil(canvas.getHeight() / numWorkers);
-
     const transform = viewTransform(point(0, 1.5, -5), point(0, 1, 0), vector(0, 1, 0))
-
     const camData = {
         width: canvas.getWidth(),
         height: canvas.getHeight(),

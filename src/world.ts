@@ -1,7 +1,7 @@
 import Sphere from "./sphere.ts";
 import PointLight from "./light.ts";
-import Tuple, {black, colour, point} from "./maths/tuple.ts";
-import {scaling} from "./maths/transformations.ts";
+import Tuple, {black, colour, point} from "./tuple.ts";
+import {scaling} from "./transformations.ts";
 import Intersections from "./intersections.ts";
 import Ray from "./ray.ts";
 import {Computations} from "./intersection.ts";

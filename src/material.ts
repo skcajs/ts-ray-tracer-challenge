@@ -1,4 +1,4 @@
-import Tuple, {black, colour, parseColor} from "./maths/tuple.ts";
+import Tuple, {black, colour, parseColor} from "./tuple.ts";
 import PointLight from "./light.ts";
 
 export default class Material {
@@ -35,7 +35,7 @@ export default class Material {
     }
 }
 
-export function makeMaterial() {
+export function material() {
     return new Material();
 }
 

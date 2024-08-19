@@ -1,5 +1,5 @@
 import {expect, test} from 'vitest'
-import Tuple, {point, vector} from '../maths/tuple.ts'
+import Tuple, {point, vector} from '../tuple.ts'
 import {compareTuples} from "./helpers.ts";
 
 test('A tuple can be create with x,y,z,w', () => {

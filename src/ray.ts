@@ -1,5 +1,5 @@
-import Tuple from "./maths/tuple.ts";
-import Matrix from "./maths/matrix.ts";
+import Tuple from "./tuple.ts";
+import Matrix from "./matrix.ts";
 
 export default class Ray {
 

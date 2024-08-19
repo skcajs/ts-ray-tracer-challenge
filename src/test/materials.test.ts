@@ -1,11 +1,11 @@
 import {expect, test} from 'vitest'
-import {makeMaterial} from "../material.ts";
-import {colour, point, vector} from "../maths/tuple.ts";
+import {material} from "../material.ts";
+import {colour, point, vector} from "../tuple.ts";
 import PointLight from "../light.ts";
 import {compareTuples} from "./helpers.ts";
 
 test('The default material', () => {
-    const m = makeMaterial();
+    const m = material();
     expect(m.color).toEqual(colour(1, 1, 1));
     expect(m.diffuse).toBe(0.9);
     expect(m.specular).toBe(0.9);
@@ -13,7 +13,7 @@ test('The default material', () => {
 });
 
 test('Lighting with the eye between the light and the surface', () => {
-    const m = makeMaterial();
+    const m = material();
     const position = point(0, 0, 0);
 
     const eyeV = vector(0, 0, -1);
@@ -24,7 +24,7 @@ test('Lighting with the eye between the light and the surface', () => {
 });
 
 test('Lighting with the eye between the light and the surface, eye offset 45 degrees', () => {
-    const m = makeMaterial();
+    const m = material();
     const position = point(0, 0, 0);
 
     const eyeV = vector(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2);
@@ -35,7 +35,7 @@ test('Lighting with the eye between the light and the surface, eye offset 45 deg
 });
 
 test('Lighting with the eye between the light and the surface, light offset 45 degrees', () => {
-    const m = makeMaterial();
+    const m = material();
     const position = point(0, 0, 0);
 
     const eyeV = vector(0, 0, -1);
@@ -46,7 +46,7 @@ test('Lighting with the eye between the light and the surface, light offset 45 d
 });
 
 test('Lighting with the eye in the path of the reflection vector', () => {
-    const m = makeMaterial();
+    const m = material();
     const position = point(0, 0, 0);
 
     const eyeV = vector(0, -Math.sqrt(2) / 2, -Math.sqrt(2) / 2);
@@ -57,7 +57,7 @@ test('Lighting with the eye in the path of the reflection vector', () => {
 });
 
 test('Lighting with the light behind the surface', () => {
-    const m = makeMaterial();
+    const m = material();
     const position = point(0, 0, 0);
 
     const eyeV = vector(0, 0, -1);
@@ -68,7 +68,7 @@ test('Lighting with the light behind the surface', () => {
 });
 
 test('Lighting with the surface in shadow', () => {
-    const m = makeMaterial();
+    const m = material();
     const position = point(0, 0, 0);
 
     const eyeV = vector(0, 0, -1);

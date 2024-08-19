@@ -1,4 +1,4 @@
-import Tuple from "./maths/tuple.ts";
+import Tuple from "./tuple.ts";
 
 export default class Canvas {
     canvas: HTMLCanvasElement;

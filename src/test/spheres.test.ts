@@ -1,10 +1,10 @@
 import {expect, test} from 'vitest'
 import Ray from "../ray.ts";
-import {point, vector} from "../maths/tuple.ts";
+import {point, vector} from "../tuple.ts";
 import Sphere from "../sphere.ts";
-import Matrix from "../maths/matrix.ts";
-import {rotation, scaling, translation} from "../maths/transformations.ts";
-import {makeMaterial} from "../material.ts";
+import Matrix from "../matrix.ts";
+import {rotation, scaling, translation} from "../transformations.ts";
+import {material} from "../material.ts";
 import {compareTuples} from "./helpers.ts";
 
 test('A ray intersects a sphere at two points', () => {
@@ -132,12 +132,12 @@ test('Computing the normal on a transformed sphere', () => {
 
 test('A sphere has a default material', () => {
     const s = new Sphere();
-    expect(s.material).toEqual(makeMaterial());
+    expect(s.material).toEqual(material());
 })
 
 test('A sphere may be assigned a new material', () => {
     const s = new Sphere();
-    const m = makeMaterial();
+    const m = material();
     m.ambient = 1;
     s.material = m;
     expect(s.material).toEqual(m);

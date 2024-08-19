@@ -1,8 +1,8 @@
 import {expect, test} from 'vitest'
-import {translation, rotation, scaling, shearing, viewTransform} from "../maths/transformations.ts";
-import {point, vector} from "../maths/tuple.ts";
+import {translation, rotation, scaling, shearing, viewTransform} from "../transformations.ts";
+import {point, vector} from "../tuple.ts";
 import {compareMatrices, compareTuples} from "./helpers.ts";
-import Matrix from "../maths/matrix.ts";
+import Matrix from "../matrix.ts";
 
 test('Multiplying by a translation matrix', () => {
     const transform = translation(5, -3, 2);

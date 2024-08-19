@@ -1,9 +1,9 @@
 import Ray from "./ray.ts";
-import Tuple, {point, vector} from "./maths/tuple.ts";
+import Tuple, {point, vector} from "./tuple.ts";
 import Intersection from "./intersection.ts";
 import Intersections from "./intersections.ts";
-import Matrix from "./maths/matrix.ts";
-import {makeMaterial} from "./material.ts";
+import Matrix from "./matrix.ts";
+import {material} from "./material.ts";
 
 export default class Sphere {
 
@@ -12,7 +12,7 @@ export default class Sphere {
 
     constructor(public origin: Tuple = point(0, 0, 0), public radius: number = 1.0) {
         this.transform = Matrix.Identity();
-        this.material = makeMaterial();
+        this.material = material();
     }
 
     intersect(ray: Ray): Intersections {

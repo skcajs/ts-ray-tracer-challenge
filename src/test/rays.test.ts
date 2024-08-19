@@ -1,7 +1,7 @@
 import {expect, test} from 'vitest'
-import {point, vector} from "../maths/tuple.ts";
+import {point, vector} from "../tuple.ts";
 import Ray from "../ray.ts";
-import {scaling, translation} from "../maths/transformations.ts";
+import {scaling, translation} from "../transformations.ts";
 
 test('Creating a querying a ray', () => {
     const origin = point(1, 2, 3);

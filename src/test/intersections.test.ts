@@ -3,7 +3,7 @@ import Sphere from "../sphere.ts";
 import Intersection from "../intersection.ts";
 import Intersections from "../intersections.ts";
 import Ray from "../ray.ts";
-import {point, vector} from "../maths/tuple.ts";
+import {point, vector} from "../tuple.ts";
 import {compareTuples} from "./helpers.ts";
 
 test('An intersection encapsulates t and object', () => {

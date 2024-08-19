@@ -1,11 +1,11 @@
 import Sphere from "../sphere.ts";
-import {rotation, scaling, translation} from "../maths/transformations.ts";
+import {rotation, scaling, translation} from "../transformations.ts";
 import Material from "../material.ts";
-import {colour, point} from "../maths/tuple.ts";
+import {colour, point} from "../tuple.ts";
 import {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
 
-const sphereScene = () => {
+const sphereWorld = () => {
 
     const floor = new Sphere();
     floor.transform = scaling(10, 0.1, 10);
@@ -55,4 +55,4 @@ const sphereScene = () => {
     return world;
 }
 
-export default sphereScene;
+export default sphereWorld;

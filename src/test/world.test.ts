@@ -1,9 +1,9 @@
 import {expect, test} from "vitest";
 import {defaultWorld, emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
-import {colour, point, vector} from "../maths/tuple.ts";
+import {colour, point, vector} from "../tuple.ts";
 import Sphere from "../sphere.ts";
-import {scaling, translation} from "../maths/transformations.ts";
+import {scaling, translation} from "../transformations.ts";
 import Ray from "../ray.ts";
 import Intersection from "../intersection.ts";
 import {compareTuples} from "./helpers.ts";

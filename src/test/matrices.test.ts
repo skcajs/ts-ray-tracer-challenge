@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest'
-import Tuple from '../maths/tuple.ts'
-import Matrix from '../maths/matrix.ts'
+import Tuple from '../tuple.ts'
+import Matrix from '../matrix.ts'
 
 test('Constructing and inspecting a 4x4 matrix', () => {
     const elements = [

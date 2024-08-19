@@ -68,32 +68,16 @@ export default class Tuple implements Transformation {
         return this.x;
     }
 
-    set r(value: number) {
-        this.x = value;
-    }
-
     get g(): number {
         return this.y;
-    }
-
-    set g(value: number) {
-        this.y = value;
     }
 
     get b(): number {
         return this.z;
     }
 
-    set b(value: number) {
-        this.z = value;
-    }
-
     get a(): number {
         return this.w;
-    }
-
-    set a(value: number) {
-        this.w = value;
     }
 
     data(): number[] {

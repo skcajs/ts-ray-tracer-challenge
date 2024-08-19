@@ -1,6 +1,6 @@
 import Sphere from "./sphere.ts";
 import Ray from "./ray.ts";
-import Tuple from "./maths/tuple.ts";
+import Tuple from "./tuple.ts";
 
 export type Computations = {
     t: number;

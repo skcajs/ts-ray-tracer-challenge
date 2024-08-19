@@ -1,8 +1,8 @@
 import {expect, test} from "vitest";
 import {compareMatrices, compareTuples} from "./helpers.ts";
-import {identity, rotation, translation, viewTransform} from "../maths/transformations.ts";
+import {identity, rotation, translation, viewTransform} from "../transformations.ts";
 import {camera} from "../camera.ts";
-import {colour, point, vector} from "../maths/tuple.ts";
+import {colour, point, vector} from "../tuple.ts";
 import {defaultWorld} from "../world.ts";
 
 const FOV = Math.PI / 2;
