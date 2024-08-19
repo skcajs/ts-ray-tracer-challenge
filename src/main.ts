@@ -8,7 +8,7 @@ main();
 function main() {
     const canvas = new Canvas(
         document.querySelector<HTMLCanvasElement>('#canvas')!,
-        100, 50);
+        400, 200);
 
     const numWorkers = navigator.hardwareConcurrency || 4;
     const chunkSize = Math.ceil(canvas.getHeight() / numWorkers);
@@ -32,9 +32,7 @@ function main() {
             camData: camData,
         });
 
-        worker.onmessage = (event) => canvas.drawImage(event.data, startY);
+        worker.onmessage = (event) => canvas.drawImage(event.data, startY, chunkSize);
     }
-
-
 }
 
