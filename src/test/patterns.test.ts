@@ -39,7 +39,7 @@ test("Stripes with an object transformation", () => {
     const object = makeSphere();
     object.setTransform(scaling(2, 2, 2));
     const pattern = stripePattern(white(), black());
-    const c = pattern.stripeAtObject(makePoint(1.5, 0, 0), object);
+    const c = pattern.colorAtObject(makePoint(1.5, 0, 0), object);
     compareTuples(c, white());
 });
 
@@ -47,7 +47,7 @@ test("Stripes with a pattern transformation", () => {
     const object = makeSphere();
     const pattern = stripePattern(white(), black());
     pattern.setTransform(scaling(2, 2, 2));
-    const c = pattern.stripeAtObject(makePoint(1.5, 0, 0), object);
+    const c = pattern.colorAtObject(makePoint(1.5, 0, 0), object);
     compareTuples(c, white());
 });
 
@@ -56,6 +56,6 @@ test("Stripes with both an object and a pattern transformation", () => {
     object.setTransform(scaling(2, 2, 2));
     const pattern = stripePattern(white(), black());
     pattern.setTransform(translation(0.5, 0, 0));
-    const c = pattern.stripeAtObject(makePoint(2.5, 0, 0), object);
+    const c = pattern.colorAtObject(makePoint(2.5, 0, 0), object);
     compareTuples(c, white());
 });

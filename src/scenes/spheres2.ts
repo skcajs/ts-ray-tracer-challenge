@@ -3,11 +3,12 @@
 import {makeSphere} from "../shapes/sphere.ts";
 import {scaling, translation, viewTransform} from "../transformations.ts";
 import Material from "../material.ts";
-import {makeColor, makePoint, makeVector} from "../tuple.ts";
+import {blue, makeColor, makePoint, makeVector, red} from "../tuple.ts";
 import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
 import {makePlane} from "../shapes/plane.ts";
 import Matrix from "../matrix.ts";
+import {stripePattern} from "../pattern.ts";
 
 const spheresWorld2 = (): [World, Matrix] => {
 
@@ -19,6 +20,8 @@ const spheresWorld2 = (): [World, Matrix] => {
     middle.material.color = makeColor(0.1, 1, 0.5);
     middle.material.diffuse = 0.7;
     middle.material.specular = 0.3;
+    middle.material.pattern = stripePattern(blue(), red());
+    middle.material.pattern.setTransform(scaling(0.5, 1, 1).rotate(2, Math.PI / 3));
 
     const right = makeSphere();
     right.transform = translation(1.5, 0.5, -0.5).multiply(scaling(0.5, 0.5, 0.5));

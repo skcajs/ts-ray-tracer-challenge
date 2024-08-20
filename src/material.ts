@@ -1,6 +1,7 @@
 import Tuple, {black, makeColor, parseColor} from "./tuple.ts";
 import PointLight from "./light.ts";
 import Pattern from "./pattern.ts";
+import Shape from "./shapes/shape.ts";
 
 export default class Material {
     constructor(public color: Tuple = makeColor(1, 1, 1),
@@ -11,11 +12,11 @@ export default class Material {
                 public pattern?: Pattern) {
     }
 
-    lighting(light: PointLight, point: Tuple, eyeV: Tuple, normalV: Tuple, inShadow: boolean = false): Tuple {
+    lighting(object: Shape, light: PointLight, point: Tuple, eyeV: Tuple, normalV: Tuple, inShadow: boolean = false): Tuple {
         let diffuse = black();
         let specular = black();
 
-        if (this.pattern) this.color = this.pattern.colorAt(point);
+        if (this.pattern) this.color = this.pattern.colorAtObject(point, object);
 
         const effectiveColor = this.color.multiplyTuple(light.intensity);
         const lightV = light.position.subtract(point).normalize();

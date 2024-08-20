@@ -11,7 +11,7 @@ function main() {
         400, 200);
 
     const fast = true;
-    const scene = "spheres";
+    const scene = "spheres2";
 
     if (fast) useWorkers(canvas, scene);
 

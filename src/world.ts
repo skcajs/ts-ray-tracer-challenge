@@ -18,7 +18,7 @@ export default class World {
     }
 
     hitShade(comps: Computations): Tuple {
-        return comps.object.material.lighting(this.light, comps.overPoint, comps.eyeV, comps.normalV, this.isShadowed(comps.overPoint));
+        return comps.object.material.lighting(comps.object, this.light, comps.overPoint, comps.eyeV, comps.normalV, this.isShadowed(comps.overPoint));
     }
 
     colorAt(r: Ray): Tuple {
