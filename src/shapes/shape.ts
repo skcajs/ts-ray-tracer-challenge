@@ -1,7 +1,7 @@
 import Matrix from "../matrix.ts";
 import Material, {material} from "../material.ts";
 import Ray from "../ray.ts";
-import Tuple from "../tuple.ts";
+import Tuple, {makeVector} from "../tuple.ts";
 import Intersections from "../intersections.ts";
 
 abstract class Shape {
@@ -13,22 +13,18 @@ abstract class Shape {
     }
 
     intersect(ray: Ray): Intersections {
-        const localRay = ray.transform(this.transform.inverse());
-        return this.localIntersect(localRay);
+        return this.localIntersect(ray.transform(this.transform.inverse()));
     }
-
-    abstract localIntersect(localRay: Ray): Intersections;
 
     normalAt(point: Tuple): Tuple {
-        const localPoint = this.transform.inverse().multiplyTuple(point);
-        const localNormal = this.localNormalAt(localPoint);
+        const localNormal = this.localNormalAt(this.transform.inverse().multiplyTuple(point));
         const worldNormal = this.transform.inverse().transpose().multiplyTuple(localNormal);
-        worldNormal.w = 0;
-
-        return worldNormal.normalize();
+        return makeVector(worldNormal.x, worldNormal.y, worldNormal.z).normalize();
     }
 
-    abstract localNormalAt(localPoint: Tuple): Tuple;
+    protected abstract localIntersect(localRay: Ray): Intersections;
+
+    protected abstract localNormalAt(localPoint: Tuple): Tuple;
 }
 
 export default Shape;

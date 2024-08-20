@@ -1,45 +1,41 @@
 import Ray from "../ray.ts";
 import Tuple, {makePoint, makeVector} from "../tuple.ts";
-import Intersection from "../intersection.ts";
+import {makeIntersection} from "../intersection.ts";
 import Intersections from "../intersections.ts";
 import Matrix from "../matrix.ts";
-import {material} from "../material.ts";
+import Shape from "./shape.ts";
 
-export default class Sphere {
-
-    transform;
-    material;
+export default class Sphere extends Shape {
 
     constructor(public origin: Tuple = makePoint(0, 0, 0), public radius: number = 1.0) {
-        this.transform = Matrix.Identity();
-        this.material = material();
-    }
-
-    intersect(ray: Ray): Intersections {
-        const rayT = ray.transform(this.transform.inverse());
-        const sphereToRay = rayT.origin.subtract(this.origin);
-
-        const a = rayT.direction.dot(rayT.direction);
-        const b = 2 * rayT.direction.dot(sphereToRay);
-        const c = sphereToRay.dot(sphereToRay) - 1;
-
-        const discriminant = Math.pow(b, 2) - 4 * a * c;
-        if (discriminant < 0) return new Intersections();
-
-        return new Intersections(
-            new Intersection((-b - Math.sqrt(discriminant)) / (2 * a), this),
-            new Intersection((-b + Math.sqrt(discriminant)) / (2 * a), this)
-        );
+        super();
     }
 
     setTransform(t: Matrix) {
         this.transform = t;
     }
 
-    normalAt(p: Tuple): Tuple {
-        const pObject = this.transform.inverse().multiplyTuple(p);
-        const pObjectNormal = pObject.subtract(this.origin);
-        const pWorld = this.transform.inverse().transpose().multiplyTuple(pObjectNormal);
-        return makeVector(pWorld.x, pWorld.y, pWorld.z).normalize();
+    localIntersect(localRay: Ray): Intersections {
+        const sphereToRay = localRay.origin.subtract(this.origin);
+
+        const a = localRay.direction.dot(localRay.direction);
+        const b = 2 * localRay.direction.dot(sphereToRay);
+        const c = sphereToRay.dot(sphereToRay) - 1;
+
+        const discriminant = Math.pow(b, 2) - 4 * a * c;
+        if (discriminant < 0) return new Intersections();
+
+        return new Intersections(
+            makeIntersection((-b - Math.sqrt(discriminant)) / (2 * a), this),
+            makeIntersection((-b + Math.sqrt(discriminant)) / (2 * a), this)
+        );
     }
+
+    localNormalAt(localPoint: Tuple): Tuple {
+        return makeVector(localPoint.x, localPoint.y, localPoint.z);
+    }
+}
+
+export const makeSphere = () => {
+    return new Sphere();
 }

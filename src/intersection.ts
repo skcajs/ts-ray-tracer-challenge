@@ -1,10 +1,10 @@
-import Sphere from "./shapes/sphere.ts";
 import Ray from "./ray.ts";
 import Tuple from "./tuple.ts";
+import Shape from "./shapes/shape.ts";
 
 export type Computations = {
     t: number;
-    object: Sphere;
+    object: Shape;
     point: Tuple;
     eyeV: Tuple;
     normalV: Tuple;
@@ -13,7 +13,7 @@ export type Computations = {
 }
 
 export default class Intersection {
-    constructor(public t: number, public object: Sphere) {
+    constructor(public t: number, public object: Shape) {
     }
 
     prepareComputations(r: Ray): Computations {
@@ -37,4 +37,8 @@ export default class Intersection {
             overPoint: overPoint,
         }
     }
+}
+
+export const makeIntersection = (t: number, shape: Shape) => {
+    return new Intersection(t, shape);
 }
