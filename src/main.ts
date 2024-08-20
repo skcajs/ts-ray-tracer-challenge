@@ -8,7 +8,7 @@ main();
 function main() {
     const canvas = new Canvas(
         document.querySelector<HTMLCanvasElement>('#canvas')!,
-        400, 200);
+        800, 400);
 
     const numWorkers = navigator.hardwareConcurrency || 4;
     const chunkSize = Math.ceil(canvas.getHeight() / numWorkers);

@@ -134,28 +134,30 @@ class Matrix4 extends Matrix {
     }
 
     multiply(m: Matrix): Matrix {
-        const s = this.size;
         const result = makeMatrix(4);
 
         const me = m.e;
         const te = this.e;
 
-        result.e[0 * s + 0] = te[0 * s + 0] * me[0 * s + 0] + te[0 * s + 1] * me[1 * s + 0] + te[0 * s + 2] * me[2 * s + 0] + te[0 * s + 3] * me[3 * s + 0];
-        result.e[0 * s + 1] = te[0 * s + 0] * me[0 * s + 1] + te[0 * s + 1] * me[1 * s + 1] + te[0 * s + 2] * me[2 * s + 1] + te[0 * s + 3] * me[3 * s + 1];
-        result.e[0 * s + 2] = te[0 * s + 0] * me[0 * s + 2] + te[0 * s + 1] * me[1 * s + 2] + te[0 * s + 2] * me[2 * s + 2] + te[0 * s + 3] * me[3 * s + 2];
-        result.e[0 * s + 3] = te[0 * s + 0] * me[0 * s + 3] + te[0 * s + 1] * me[1 * s + 3] + te[0 * s + 2] * me[2 * s + 3] + te[0 * s + 3] * me[3 * s + 3];
-        result.e[1 * s + 0] = te[1 * s + 0] * me[0 * s + 0] + te[1 * s + 1] * me[1 * s + 0] + te[1 * s + 2] * me[2 * s + 0] + te[1 * s + 3] * me[3 * s + 0];
-        result.e[1 * s + 1] = te[1 * s + 0] * me[0 * s + 1] + te[1 * s + 1] * me[1 * s + 1] + te[1 * s + 2] * me[2 * s + 1] + te[1 * s + 3] * me[3 * s + 1];
-        result.e[1 * s + 2] = te[1 * s + 0] * me[0 * s + 2] + te[1 * s + 1] * me[1 * s + 2] + te[1 * s + 2] * me[2 * s + 2] + te[1 * s + 3] * me[3 * s + 2];
-        result.e[1 * s + 3] = te[1 * s + 0] * me[0 * s + 3] + te[1 * s + 1] * me[1 * s + 3] + te[1 * s + 2] * me[2 * s + 3] + te[1 * s + 3] * me[3 * s + 3];
-        result.e[2 * s + 0] = te[2 * s + 0] * me[0 * s + 0] + te[2 * s + 1] * me[1 * s + 0] + te[2 * s + 2] * me[2 * s + 0] + te[2 * s + 3] * me[3 * s + 0];
-        result.e[2 * s + 1] = te[2 * s + 0] * me[0 * s + 1] + te[2 * s + 1] * me[1 * s + 1] + te[2 * s + 2] * me[2 * s + 1] + te[2 * s + 3] * me[3 * s + 1];
-        result.e[2 * s + 2] = te[2 * s + 0] * me[0 * s + 2] + te[2 * s + 1] * me[1 * s + 2] + te[2 * s + 2] * me[2 * s + 2] + te[2 * s + 3] * me[3 * s + 2];
-        result.e[2 * s + 3] = te[2 * s + 0] * me[0 * s + 3] + te[2 * s + 1] * me[1 * s + 3] + te[2 * s + 2] * me[2 * s + 3] + te[2 * s + 3] * me[3 * s + 3];
-        result.e[3 * s + 0] = te[3 * s + 0] * me[0 * s + 0] + te[3 * s + 1] * me[1 * s + 0] + te[3 * s + 2] * me[2 * s + 0] + te[3 * s + 3] * me[3 * s + 0];
-        result.e[3 * s + 1] = te[3 * s + 0] * me[0 * s + 1] + te[3 * s + 1] * me[1 * s + 1] + te[3 * s + 2] * me[2 * s + 1] + te[3 * s + 3] * me[3 * s + 1];
-        result.e[3 * s + 2] = te[3 * s + 0] * me[0 * s + 2] + te[3 * s + 1] * me[1 * s + 2] + te[3 * s + 2] * me[2 * s + 2] + te[3 * s + 3] * me[3 * s + 2];
-        result.e[3 * s + 3] = te[3 * s + 0] * me[0 * s + 3] + te[3 * s + 1] * me[1 * s + 3] + te[3 * s + 2] * me[2 * s + 3] + te[3 * s + 3] * me[3 * s + 3];
+        result.e[0] = te[0] * me[0] + te[1] * me[4] + te[2] * me[8] + te[3] * me[12];
+        result.e[1] = te[0] * me[1] + te[1] * me[5] + te[2] * me[9] + te[3] * me[13];
+        result.e[2] = te[0] * me[2] + te[1] * me[6] + te[2] * me[10] + te[3] * me[14];
+        result.e[3] = te[0] * me[3] + te[1] * me[7] + te[2] * me[11] + te[3] * me[15];
+
+        result.e[4] = te[4] * me[0] + te[5] * me[4] + te[6] * me[8] + te[7] * me[12];
+        result.e[5] = te[4] * me[1] + te[5] * me[5] + te[6] * me[9] + te[7] * me[13];
+        result.e[6] = te[4] * me[2] + te[5] * me[6] + te[6] * me[10] + te[7] * me[14];
+        result.e[7] = te[4] * me[3] + te[5] * me[7] + te[6] * me[11] + te[7] * me[15];
+
+        result.e[8] = te[8] * me[0] + te[9] * me[4] + te[10] * me[8] + te[11] * me[12];
+        result.e[9] = te[8] * me[1] + te[9] * me[5] + te[10] * me[9] + te[11] * me[13];
+        result.e[10] = te[8] * me[2] + te[9] * me[6] + te[10] * me[10] + te[11] * me[14];
+        result.e[11] = te[8] * me[3] + te[9] * me[7] + te[10] * me[11] + te[11] * me[15];
+
+        result.e[12] = te[12] * me[0] + te[13] * me[4] + te[14] * me[8] + te[15] * me[12];
+        result.e[13] = te[12] * me[1] + te[13] * me[5] + te[14] * me[9] + te[15] * me[13];
+        result.e[14] = te[12] * me[2] + te[13] * me[6] + te[14] * me[10] + te[15] * me[14];
+        result.e[15] = te[12] * me[3] + te[13] * me[7] + te[14] * me[11] + te[15] * me[15];
 
         return result;
     }
@@ -186,18 +188,16 @@ class Matrix3 extends Matrix {
         const me = m.e;
         const te = this.e;
 
-        result.e[0 * s + 0] = te[0 * s + 0] * me[0 * s + 0] + te[0 * s + 1] * me[1 * s + 0] + te[0 * s + 2] * me[2 * s + 0];
-        result.e[0 * s + 1] = te[0 * s + 0] * me[0 * s + 1] + te[0 * s + 1] * me[1 * s + 1] + te[0 * s + 2] * me[2 * s + 1];
-        result.e[0 * s + 2] = te[0 * s + 0] * me[0 * s + 2] + te[0 * s + 1] * me[1 * s + 2] + te[0 * s + 2] * me[2 * s + 2];
-        result.e[0 * s + 3] = te[0 * s + 0] * me[0 * s + 3] + te[0 * s + 1] * me[1 * s + 3] + te[0 * s + 2] * me[2 * s + 3];
-        result.e[1 * s + 0] = te[1 * s + 0] * me[0 * s + 0] + te[1 * s + 1] * me[1 * s + 0] + te[1 * s + 2] * me[2 * s + 0];
-        result.e[1 * s + 1] = te[1 * s + 0] * me[0 * s + 1] + te[1 * s + 1] * me[1 * s + 1] + te[1 * s + 2] * me[2 * s + 1];
-        result.e[1 * s + 2] = te[1 * s + 0] * me[0 * s + 2] + te[1 * s + 1] * me[1 * s + 2] + te[1 * s + 2] * me[2 * s + 2];
-        result.e[1 * s + 3] = te[1 * s + 0] * me[0 * s + 3] + te[1 * s + 1] * me[1 * s + 3] + te[1 * s + 2] * me[2 * s + 3];
-        result.e[2 * s + 0] = te[2 * s + 0] * me[0 * s + 0] + te[2 * s + 1] * me[1 * s + 0] + te[2 * s + 2] * me[2 * s + 0];
-        result.e[2 * s + 1] = te[2 * s + 0] * me[0 * s + 1] + te[2 * s + 1] * me[1 * s + 1] + te[2 * s + 2] * me[2 * s + 1];
-        result.e[2 * s + 2] = te[2 * s + 0] * me[0 * s + 2] + te[2 * s + 1] * me[1 * s + 2] + te[2 * s + 2] * me[2 * s + 2];
-        result.e[2 * s + 3] = te[2 * s + 0] * me[0 * s + 3] + te[2 * s + 1] * me[1 * s + 3] + te[2 * s + 2] * me[2 * s + 3];
+
+        result.e[0] = te[0] * me[0] + te[1] * me[3] + te[2] * me[6];
+        result.e[1] = te[0] * me[1] + te[1] * me[4] + te[2] * me[7];
+        result.e[2] = te[0] * me[2] + te[1] * me[5] + te[2] * me[8];
+        result.e[3] = te[3] * me[0] + te[4] * me[3] + te[5] * me[6];
+        result.e[4] = te[3] * me[1] + te[4] * me[4] + te[5] * me[7];
+        result.e[5] = te[3] * me[2] + te[4] * me[5] + te[5] * me[8];
+        result.e[6] = te[6] * me[0] + te[7] * me[3] + te[8] * me[6];
+        result.e[7] = te[6] * me[1] + te[7] * me[4] + te[8] * me[7];
+        result.e[8] = te[6] * me[2] + te[7] * me[5] + te[8] * me[8];
 
         return result;
     }
@@ -220,14 +220,10 @@ class Matrix2 extends Matrix {
         const me = m.e;
         const te = this.e;
 
-        result.e[0 * s + 0] = te[0 * s + 0] * me[0 * s + 0] + te[0 * s + 1] * m.e[1 * s + 0];
-        result.e[0 * s + 1] = te[0 * s + 0] * me[0 * s + 1] + te[0 * s + 1] * m.e[1 * s + 1];
-        result.e[0 * s + 2] = te[0 * s + 0] * me[0 * s + 2] + te[0 * s + 1] * m.e[1 * s + 2];
-        result.e[0 * s + 3] = te[0 * s + 0] * me[0 * s + 3] + te[0 * s + 1] * m.e[1 * s + 3];
-        result.e[1 * s + 0] = te[1 * s + 0] * me[0 * s + 0] + te[1 * s + 1] * m.e[1 * s + 0];
-        result.e[1 * s + 1] = te[1 * s + 0] * me[0 * s + 1] + te[1 * s + 1] * m.e[1 * s + 1];
-        result.e[1 * s + 2] = te[1 * s + 0] * me[0 * s + 2] + te[1 * s + 1] * m.e[1 * s + 2];
-        result.e[1 * s + 3] = te[1 * s + 0] * me[0 * s + 3] + te[1 * s + 1] * m.e[1 * s + 3];
+        result.e[0] = te[0] * me[0] + te[1] * me[2];
+        result.e[1] = te[0] * me[1] + te[1] * me[3];
+        result.e[2] = te[2] * me[0] + te[3] * me[2];
+        result.e[3] = te[2] * me[1] + te[3] * me[3];
 
         return result;
     }
