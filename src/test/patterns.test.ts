@@ -2,6 +2,8 @@ import {test} from "vitest";
 import {black, makePoint, white} from "../tuple.ts";
 import {compareTuples} from "./helpers.ts";
 import {stripePattern} from "../pattern.ts";
+import {makeSphere} from "../shapes/sphere.ts";
+import {scaling, translation} from "../transformations.ts";
 
 test("Creating a stripe pattern", () => {
     const pattern = stripePattern(white(), black());
@@ -31,4 +33,29 @@ test("A stripe pattern is constant in x", () => {
     compareTuples(pattern.colorAt(makePoint(-0.1, 0, 0)), black());
     compareTuples(pattern.colorAt(makePoint(-1, 0, 0)), black());
     compareTuples(pattern.colorAt(makePoint(-1.1, 0, 0)), white());
+});
+
+test("Stripes with an object transformation", () => {
+    const object = makeSphere();
+    object.setTransform(scaling(2, 2, 2));
+    const pattern = stripePattern(white(), black());
+    const c = pattern.stripeAtObject(makePoint(1.5, 0, 0), object);
+    compareTuples(c, white());
+});
+
+test("Stripes with a pattern transformation", () => {
+    const object = makeSphere();
+    const pattern = stripePattern(white(), black());
+    pattern.setTransform(scaling(2, 2, 2));
+    const c = pattern.stripeAtObject(makePoint(1.5, 0, 0), object);
+    compareTuples(c, white());
+});
+
+test("Stripes with both an object and a pattern transformation", () => {
+    const object = makeSphere();
+    object.setTransform(scaling(2, 2, 2));
+    const pattern = stripePattern(white(), black());
+    pattern.setTransform(translation(0.5, 0, 0));
+    const c = pattern.stripeAtObject(makePoint(2.5, 0, 0), object);
+    compareTuples(c, white());
 });
