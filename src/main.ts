@@ -28,6 +28,7 @@ function main() {
             startY: startY,
             endY: Math.min(startY + chunkSize, camData.height),
             camData: camData,
+            scene: "spheres2"
         });
 
         worker.onmessage = (event) => canvas.drawImage(event.data, startY, chunkSize);

@@ -1,12 +1,12 @@
 import {makeCamera} from "./camera.ts";
-import spheres from "./scenes/spheres.ts";
 import Matrix from "./matrix.ts";
+import loadScene from "./scenes/scene.ts";
 
 self.onmessage = (event) => {
 
-    const {startY, endY, camData} = event.data;
+    const {startY, endY, camData, scene} = event.data;
 
-    const world = spheres();
+    const world = loadScene(scene);
 
     const cam = makeCamera(camData.width, camData.height, camData.fieldOfView);
     cam.transform = new Matrix(camData.transform);

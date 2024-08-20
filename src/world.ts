@@ -5,9 +5,10 @@ import {scaling} from "./transformations.ts";
 import Intersections from "./intersections.ts";
 import Ray from "./ray.ts";
 import {Computations} from "./intersection.ts";
+import Shape from "./shapes/shape.ts";
 
 export default class World {
-    constructor(public objects: Sphere[] = [], public light: PointLight = new PointLight(makePoint(0, 0, 0), makeColor(1, 1, 1))) {
+    constructor(public objects: Shape[] = [], public light: PointLight = new PointLight(makePoint(0, 0, 0), makeColor(1, 1, 1))) {
     }
 
     intersect(r: Ray): Intersections {
