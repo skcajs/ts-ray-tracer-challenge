@@ -1,11 +1,11 @@
-import Matrix from "../matrix.ts";
+import Matrix, {identity} from "../matrix.ts";
 import Material, {material} from "../material.ts";
 import Ray from "../ray.ts";
 import Tuple, {makeVector} from "../tuple.ts";
 import Intersections from "../intersections.ts";
 
 abstract class Shape {
-    transform: Matrix = Matrix.Identity();
+    transform: Matrix = identity();
     material: Material = material();
 
     setTransform(t: Matrix) {

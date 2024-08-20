@@ -1,7 +1,7 @@
-import {identity} from "./transformations.ts";
 import Ray from "./ray.ts";
 import {makePoint} from "./tuple.ts";
 import World from "./world.ts";
+import {identity} from "./matrix.ts";
 
 class Camera {
     halfWidth;

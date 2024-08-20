@@ -1,6 +1,6 @@
 import {expect, test} from 'vitest'
 import {compareMatrices, compareTuples} from "./helpers.ts";
-import Matrix from "../matrix.ts";
+import {identity} from "../matrix.ts";
 import {rotation, scaling, translation} from "../transformations.ts";
 import {material} from "../material.ts";
 import {makeRay} from "../ray.ts";
@@ -9,7 +9,7 @@ import {testShape} from "../shapes/testShape.ts";
 
 test('The default transformation', () => {
     const s = testShape();
-    compareMatrices(s.transform, Matrix.Identity())
+    compareMatrices(s.transform, identity())
 });
 
 test('Assigning a transformation', () => {

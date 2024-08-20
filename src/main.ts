@@ -17,7 +17,7 @@ function main() {
         width: canvas.getWidth(),
         height: canvas.getHeight(),
         fieldOfView: Math.PI / 3,
-        transform: transform.elements
+        transform: transform.e
     };
 
     for (let i = 0; i < numWorkers; i++) {

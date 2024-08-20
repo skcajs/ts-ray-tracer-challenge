@@ -2,7 +2,7 @@ import {expect, test} from 'vitest'
 import {translation, rotation, scaling, shearing, viewTransform} from "../transformations.ts";
 import {makePoint, makeVector} from "../tuple.ts";
 import {compareMatrices, compareTuples} from "./helpers.ts";
-import Matrix from "../matrix.ts";
+import {identity, makeMatrix} from "../matrix.ts";
 
 test('Multiplying by a translation matrix', () => {
     const transform = translation(5, -3, 2);
@@ -221,7 +221,7 @@ test('The transformation matrix for the default orientation', () => {
     const to = makePoint(0, 0, -1);
     const up = makeVector(0, 1, 0);
     const t = viewTransform(from, to, up);
-    compareMatrices(t, Matrix.Identity());
+    compareMatrices(t, identity());
 });
 
 test('A view transformation matrix looking in the positive z direction', () => {
@@ -246,11 +246,11 @@ test('An arbitrary view transformation', () => {
     const to = makePoint(4, -2, 8);
     const up = makeVector(1, 1, 0);
     const t = viewTransform(from, to, up);
-    const expected = new Matrix([
-        [-0.50709, 0.50709, 0.67612, -2.36643],
-        [0.76772, 0.60609, 0.12122, -2.82843],
-        [-0.35857, 0.59761, -0.71714, 0.00000],
-        [0.00000, 0.00000, 0.00000, 1.00000]
+    const expected = makeMatrix([
+        -0.50709, 0.50709, 0.67612, -2.36643,
+        0.76772, 0.60609, 0.12122, -2.82843,
+        -0.35857, 0.59761, -0.71714, 0.00000,
+        0.00000, 0.00000, 0.00000, 1.00000
     ]);
 
     compareMatrices(t, expected);
