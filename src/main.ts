@@ -1,7 +1,5 @@
 import './style.css'
 import Canvas from './canvas.ts'
-import {viewTransform} from "./transformations.ts";
-import {makePoint, makeVector} from "./tuple.ts";
 import loadScene from "./scenes/scene.ts";
 import {makeCamera} from "./camera.ts";
 
@@ -10,7 +8,7 @@ main();
 function main() {
     const canvas = new Canvas(
         document.querySelector<HTMLCanvasElement>('#canvas')!,
-        800, 400);
+        400, 200);
 
     const fast = true;
     const scene = "spheres";
@@ -18,9 +16,9 @@ function main() {
     if (fast) useWorkers(canvas, scene);
 
     else {
-        const world = loadScene(scene);
+        const [world, transform] = loadScene(scene);
         const cam = makeCamera(canvas.getWidth(), canvas.getHeight(), Math.PI / 3);
-        cam.transform = viewTransform(makePoint(0, 1.5, -5), makePoint(0, 1, 0), makeVector(0, 1, 0));
+        cam.transform = transform;
         const data = cam.render(world);
         canvas.drawImage(data);
     }
@@ -29,12 +27,10 @@ function main() {
 function useWorkers(canvas: Canvas, scene: string) {
     const numWorkers = navigator.hardwareConcurrency || 4;
     const chunkSize = Math.ceil(canvas.getHeight() / numWorkers);
-    const transform = viewTransform(makePoint(0, 1.5, -5), makePoint(0, 1, 0), makeVector(0, 1, 0))
     const camData = {
         width: canvas.getWidth(),
         height: canvas.getHeight(),
-        fieldOfView: Math.PI / 3,
-        transform: transform.e
+        fieldOfView: Math.PI / 3
     };
 
     for (let i = 0; i < numWorkers; i++) {

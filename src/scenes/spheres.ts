@@ -1,17 +1,20 @@
 import Sphere from "../shapes/sphere.ts";
-import {rotation, scaling, translation} from "../transformations.ts";
+import {rotation, scaling, translation, viewTransform} from "../transformations.ts";
 import Material from "../material.ts";
-import {makeColor, makePoint} from "../tuple.ts";
-import {emptyWorld} from "../world.ts";
+import {black, makeColor, makePoint, makeVector, white} from "../tuple.ts";
+import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
+import Matrix from "../matrix.ts";
+import {stripePattern} from "../pattern.ts";
 
-const sphereWorld = () => {
+const spheresWorld = (): [World, Matrix] => {
 
     const floor = new Sphere();
     floor.transform = scaling(10, 0.1, 10);
     floor.material = new Material();
     floor.material.color = makeColor(1, 0.9, 0.9);
     floor.material.specular = 0;
+    floor.material.pattern = stripePattern(white(), black());
 
     const leftWall = new Sphere();
     leftWall.transform = translation(0, 0, 5)
@@ -33,6 +36,7 @@ const sphereWorld = () => {
     middle.material.color = makeColor(0.1, 1, 0.5);
     middle.material.diffuse = 0.7;
     middle.material.specular = 0.3;
+    middle.material.pattern = stripePattern(white(), black());
 
     const right = new Sphere();
     right.transform = translation(1.5, 0.5, -0.5).multiply(scaling(0.5, 0.5, 0.5));
@@ -40,6 +44,7 @@ const sphereWorld = () => {
     right.material.color = makeColor(0.5, 1, 0.1);
     right.material.diffuse = 0.7;
     right.material.specular = 0.3;
+    right.material.pattern = stripePattern(white(), black());
 
     const left = new Sphere();
     left.transform = translation(-1.5, 0.33, -0.75).multiply(scaling(0.33, 0.33, 0.33));
@@ -47,12 +52,15 @@ const sphereWorld = () => {
     left.material.color = makeColor(1, 0.8, 0.1);
     left.material.diffuse = 0.7;
     left.material.specular = 0.3;
+    left.material.pattern = stripePattern(white(), black());
 
     const world = emptyWorld();
     world.light = new PointLight(makePoint(-10, 10, -10), makeColor(1, 1, 1));
     world.objects = [floor, leftWall, rightWall, middle, right, left];
 
-    return world;
+    const transform = viewTransform(makePoint(0, 1.5, -5), makePoint(0, 1, 0), makeVector(0, 1, 0))
+
+    return [world, transform];
 }
 
-export default sphereWorld;
+export default spheresWorld;

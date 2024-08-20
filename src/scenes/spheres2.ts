@@ -1,14 +1,15 @@
 // noinspection DuplicatedCode
 
 import {makeSphere} from "../shapes/sphere.ts";
-import {scaling, translation} from "../transformations.ts";
+import {scaling, translation, viewTransform} from "../transformations.ts";
 import Material from "../material.ts";
-import {makeColor, makePoint} from "../tuple.ts";
-import {emptyWorld} from "../world.ts";
+import {makeColor, makePoint, makeVector} from "../tuple.ts";
+import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
 import {makePlane} from "../shapes/plane.ts";
+import Matrix from "../matrix.ts";
 
-const sphereWorld2 = () => {
+const spheresWorld2 = (): [World, Matrix] => {
 
     const floor = makePlane();
 
@@ -37,7 +38,9 @@ const sphereWorld2 = () => {
     world.light = new PointLight(makePoint(-10, 10, -10), makeColor(1, 1, 1));
     world.objects = [floor, middle, right, left];
 
-    return world;
+    const transform = viewTransform(makePoint(0, 1.5, -5), makePoint(0, 1, 0), makeVector(0, 1, 0))
+
+    return [world, transform];
 }
 
-export default sphereWorld2;
+export default spheresWorld2;

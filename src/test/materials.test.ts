@@ -1,8 +1,9 @@
 import {expect, test} from 'vitest'
 import {material} from "../material.ts";
-import {makeColor, makePoint, makeVector} from "../tuple.ts";
-import PointLight from "../light.ts";
+import {black, makeColor, makePoint, makeVector, white} from "../tuple.ts";
+import PointLight, {pointLight} from "../light.ts";
 import {compareTuples} from "./helpers.ts";
+import {stripePattern} from "../pattern.ts";
 
 test('The default material', () => {
     const m = material();
@@ -77,4 +78,19 @@ test('Lighting with the surface in shadow', () => {
     const inShadow = true;
     const result = m.lighting(light, position, eyeV, normalV, inShadow);
     compareTuples(result, makeColor(0.1, 0.1, 0.1));
+});
+
+test('Lighting with a pattern applied', () => {
+    const m = material();
+    m.pattern = stripePattern(white(), black());
+    m.ambient = 1;
+    m.diffuse = 0;
+    m.specular = 0;
+    const eyeV = makeVector(0, 0, -1);
+    const normalV = makeVector(0, 0, -1);
+    const light = pointLight(makePoint(0, 0, -10), makeColor(1, 1, 1));
+    const c1 = m.lighting(light, makePoint(0.9, 0, 0), eyeV, normalV, false);
+    const c2 = m.lighting(light, makePoint(1.1, 0, 0), eyeV, normalV, false);
+    compareTuples(c1, white());
+    compareTuples(c2, black());
 });
