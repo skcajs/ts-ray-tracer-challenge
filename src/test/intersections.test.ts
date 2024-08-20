@@ -1,9 +1,9 @@
 import {expect, test} from 'vitest'
-import Sphere from "../sphere.ts";
+import Sphere from "../shapes/sphere.ts";
 import Intersection from "../intersection.ts";
 import Intersections from "../intersections.ts";
 import Ray from "../ray.ts";
-import {point, vector} from "../tuple.ts";
+import {makePoint, makeVector} from "../tuple.ts";
 import {compareTuples} from "./helpers.ts";
 
 test('An intersection encapsulates t and object', () => {
@@ -62,19 +62,19 @@ test('The hit is always the lowest non-negative intersection', () => {
 });
 
 test('Precomputing the state of an intersection', () => {
-    const r = new Ray(point(0, 0, -5), vector(0, 0, 1));
+    const r = new Ray(makePoint(0, 0, -5), makeVector(0, 0, 1));
     const shape = new Sphere();
     const i = new Intersection(4, shape);
     const comps = i.prepareComputations(r);
     expect(comps.t).toEqual(i.t);
     expect(comps.object).toEqual(i.object);
-    compareTuples(comps.point, point(0, 0, -1));
-    compareTuples(comps.eyeV, vector(0, 0, -1));
-    compareTuples(comps.normalV, vector(0, 0, -1));
+    compareTuples(comps.point, makePoint(0, 0, -1));
+    compareTuples(comps.eyeV, makeVector(0, 0, -1));
+    compareTuples(comps.normalV, makeVector(0, 0, -1));
 });
 
 test('The hit, when an intersection occurs on the outside', () => {
-    const r = new Ray(point(0, 0, -5), vector(0, 0, 1));
+    const r = new Ray(makePoint(0, 0, -5), makeVector(0, 0, 1));
     const shape = new Sphere();
     const i = new Intersection(4, shape);
     const comps = i.prepareComputations(r);
@@ -82,12 +82,12 @@ test('The hit, when an intersection occurs on the outside', () => {
 });
 
 test('The hit, when an intersection occurs on the inside', () => {
-    const r = new Ray(point(0, 0, 0), vector(0, 0, 1));
+    const r = new Ray(makePoint(0, 0, 0), makeVector(0, 0, 1));
     const shape = new Sphere();
     const i = new Intersection(1, shape);
     const comps = i.prepareComputations(r);
-    compareTuples(comps.point, point(0, 0, 1));
-    compareTuples(comps.eyeV, vector(0, 0, -1));
+    compareTuples(comps.point, makePoint(0, 0, 1));
+    compareTuples(comps.eyeV, makeVector(0, 0, -1));
     expect(comps.inside).toBeTruthy();
-    compareTuples(comps.normalV, vector(0, 0, -1));
+    compareTuples(comps.normalV, makeVector(0, 0, -1));
 });

@@ -90,11 +90,11 @@ export default class Tuple implements Transformation {
     }
 }
 
-export function point(x: number, y: number, z: number): Tuple {
+export function makePoint(x: number, y: number, z: number): Tuple {
     return new Tuple(x, y, z, 1);
 }
 
-export function vector(x: number, y: number, z: number): Tuple {
+export function makeVector(x: number, y: number, z: number): Tuple {
     return new Tuple(x, y, z, 0);
 }
 
@@ -102,7 +102,7 @@ export function unitVector(x: number, y: number, z: number): Tuple {
     return new Tuple(x, y, z, 0).normalize();
 }
 
-export function colour(r: number, g: number, b: number, a: number = 1.0): Tuple {
+export function makeColor(r: number, g: number, b: number, a: number = 1.0): Tuple {
     return new Tuple(r, g, b, a);
 }
 

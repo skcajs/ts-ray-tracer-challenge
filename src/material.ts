@@ -1,8 +1,8 @@
-import Tuple, {black, colour, parseColor} from "./tuple.ts";
+import Tuple, {black, makeColor, parseColor} from "./tuple.ts";
 import PointLight from "./light.ts";
 
 export default class Material {
-    constructor(public color: Tuple = colour(1, 1, 1),
+    constructor(public color: Tuple = makeColor(1, 1, 1),
                 public ambient: number = 0.1,
                 public diffuse: number = 0.9,
                 public specular: number = 0.9,

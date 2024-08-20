@@ -1,6 +1,6 @@
 import {identity} from "./transformations.ts";
 import Ray from "./ray.ts";
-import {point} from "./tuple.ts";
+import {makePoint} from "./tuple.ts";
 import World from "./world.ts";
 
 class Camera {
@@ -31,8 +31,8 @@ class Camera {
         const worldX = this.halfWidth - xOffset;
         const worldY = this.halfHeight - yOffset;
 
-        const pixel = this.transform.inverse().multiplyTuple(point(worldX, worldY, -1));
-        const origin = this.transform.inverse().multiplyTuple(point(0, 0, 0));
+        const pixel = this.transform.inverse().multiplyTuple(makePoint(worldX, worldY, -1));
+        const origin = this.transform.inverse().multiplyTuple(makePoint(0, 0, 0));
         const direction = pixel.subtract(origin).normalize();
 
         return new Ray(origin, direction);
@@ -61,7 +61,7 @@ class Camera {
     };
 }
 
-export const camera = (hSize: number, vSize: number, fieldOfView: number) => {
+export const makeCamera = (hSize: number, vSize: number, fieldOfView: number) => {
     return new Camera(hSize, vSize, fieldOfView);
 }
 

@@ -1,4 +1,4 @@
-import Sphere from "./sphere.ts";
+import Sphere from "./shapes/sphere.ts";
 import Ray from "./ray.ts";
 import Tuple from "./tuple.ts";
 

@@ -15,6 +15,6 @@ export default class Ray {
     }
 }
 
-export function ray(origin: Tuple, direction: Tuple) {
+export function makeRay(origin: Tuple, direction: Tuple) {
     return new Ray(origin, direction);
 }
