@@ -8,7 +8,7 @@ export default class Checker extends Pattern {
     }
 
     protected localColorAt(localPoint: Tuple): Tuple {
-        return Math.floor(Math.sqrt(localPoint.x ** 2 + localPoint.y ** 2 + localPoint.z ** 2)) % 2 == 0 ? this.a : this.b;
+        return (Math.floor(localPoint.x) + Math.floor(localPoint.y) + Math.floor(localPoint.z)) % 2 == 0 ? this.a : this.b;
     }
 
 }

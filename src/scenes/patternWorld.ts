@@ -3,16 +3,19 @@
 import {makeSphere} from "../shapes/sphere.ts";
 import {scaling, translation, viewTransform} from "../transformations.ts";
 import Material from "../material.ts";
-import {blue, makeColor, makePoint, makeVector, red} from "../tuple.ts";
+import {blue, green, makeColor, makePoint, makeVector, purple, red, white} from "../tuple.ts";
 import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
 import {makePlane} from "../shapes/plane.ts";
 import Matrix from "../matrix.ts";
 import {makeStripes} from "../patterns/stripes.ts";
+import {makeChecker} from "../patterns/checker.ts";
 
-const spheresWorld2 = (): [World, Matrix] => {
+const patternWorld = (): [World, Matrix] => {
 
     const floor = makePlane();
+    floor.material.pattern = makeChecker(purple(), white());
+    floor.material.pattern.setTransform(scaling(1, 1, 1));
 
     const middle = makeSphere();
     middle.transform = translation(-0.5, 1, 0.5);
@@ -20,8 +23,8 @@ const spheresWorld2 = (): [World, Matrix] => {
     middle.material.color = makeColor(0.1, 1, 0.5);
     middle.material.diffuse = 0.7;
     middle.material.specular = 0.3;
-    middle.material.pattern = makeStripes(blue(), red());
-    middle.material.pattern.setTransform(scaling(0.5, 1, 1).rotate(2, Math.PI / 3));
+    middle.material.pattern = makeChecker(blue(), red());
+    middle.material.pattern.setTransform(scaling(0.5, 0.5, 0.5));
 
     const right = makeSphere();
     right.transform = translation(1.5, 0.5, -0.5).multiply(scaling(0.5, 0.5, 0.5));
@@ -29,6 +32,8 @@ const spheresWorld2 = (): [World, Matrix] => {
     right.material.color = makeColor(0.5, 1, 0.1);
     right.material.diffuse = 0.7;
     right.material.specular = 0.3;
+    right.material.pattern = makeStripes(blue(), green());
+    right.material.pattern.setTransform(scaling(0.25, 0.25, 0.25).rotate(1, -Math.PI / 4))
 
     const left = makeSphere();
     left.transform = translation(-1.5, 0.33, -0.75).multiply(scaling(0.33, 0.33, 0.33));
@@ -46,4 +51,4 @@ const spheresWorld2 = (): [World, Matrix] => {
     return [world, transform];
 }
 
-export default spheresWorld2;
+export default patternWorld;

@@ -1,6 +1,7 @@
-import sphereWorld from "./sphere.ts";
+import sphereWorld from "./sphereWorld.ts";
 import spheresWorld from "./spheres.ts";
 import spheresWorld2 from "./spheres2.ts";
+import patternWorld from "./patternWorld.ts";
 
 export default function loadScene(name: string) {
     switch (name) {
@@ -10,6 +11,8 @@ export default function loadScene(name: string) {
             return spheresWorld();
         case "spheres2":
             return spheresWorld2();
+        case "pattern":
+            return patternWorld();
         default:
             return sphereWorld();
     }
