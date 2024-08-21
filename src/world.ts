@@ -1,9 +1,9 @@
 import Sphere from "./shapes/sphere.ts";
 import PointLight from "./light.ts";
-import Tuple, {black, makeColor, makePoint} from "./tuple.ts";
+import Tuple, {black, makeColor, makePoint, parseColor} from "./tuple.ts";
 import {scaling} from "./transformations.ts";
 import Intersections from "./intersections.ts";
-import Ray from "./ray.ts";
+import Ray, {makeRay} from "./ray.ts";
 import {Computations} from "./intersection.ts";
 import Shape from "./shapes/shape.ts";
 
@@ -17,13 +17,22 @@ export default class World {
                 .sort((a, b) => a.t - b.t));
     }
 
-    hitShade(comps: Computations): Tuple {
-        return comps.object.material.lighting(comps.object, this.light, comps.overPoint, comps.eyeV, comps.normalV, this.isShadowed(comps.overPoint));
+    shadeHit(comps: Computations, depth: number = 1): Tuple {
+        return parseColor(this.reflectedColor(comps, depth).add(comps.object.material.lighting(comps.object, this.light, comps.overPoint, comps.eyeV, comps.normalV, this.isShadowed(comps.overPoint))));
     }
 
-    colorAt(r: Ray): Tuple {
+    reflectedColor(comps: Computations, depth: number = 1): Tuple {
+        if (!comps.object.material.reflective) return black();
+
+        if (depth <= 0) return black();
+
+        return parseColor(this.colorAt(makeRay(comps.overPoint, comps.reflectV), depth - 1)
+            .multiply(comps.object.material.reflective));
+    }
+
+    colorAt(r: Ray, depth: number = 1): Tuple {
         const hit = this.intersect(r).hit();
-        return hit ? this.hitShade(hit.prepareComputations(r)) : black();
+        return hit ? this.shadeHit(hit.prepareComputations(r), depth) : black();
     }
 
     isShadowed(point: Tuple): boolean {

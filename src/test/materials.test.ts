@@ -95,3 +95,8 @@ test('Lighting with a pattern applied', () => {
     compareTuples(c1, white());
     compareTuples(c2, black());
 });
+
+test('Reflectivity for the default material', () => {
+    const m = material();
+    expect(m.reflective).toBe(0.0);
+});

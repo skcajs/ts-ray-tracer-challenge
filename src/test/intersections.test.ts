@@ -1,10 +1,11 @@
 import {expect, test} from 'vitest'
 import Sphere from "../shapes/sphere.ts";
-import Intersection from "../intersection.ts";
+import Intersection, {makeIntersection} from "../intersection.ts";
 import Intersections from "../intersections.ts";
-import Ray from "../ray.ts";
+import Ray, {makeRay} from "../ray.ts";
 import {makePoint, makeVector} from "../tuple.ts";
 import {compareTuples} from "./helpers.ts";
+import {makePlane} from "../shapes/plane.ts";
 
 test('An intersection encapsulates t and object', () => {
     const s = new Sphere();
@@ -90,4 +91,12 @@ test('The hit, when an intersection occurs on the inside', () => {
     compareTuples(comps.eyeV, makeVector(0, 0, -1));
     expect(comps.inside).toBeTruthy();
     compareTuples(comps.normalV, makeVector(0, 0, -1));
+});
+
+test("Precomputing the reflection vector", () => {
+    const shape = makePlane();
+    const r = makeRay(makePoint(0, 0, -1), makeVector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+    const i = makeIntersection(Math.sqrt(2), shape);
+    const comps = i.prepareComputations(r);
+    compareTuples(comps.reflectV, makeVector(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2))
 });

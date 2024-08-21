@@ -1,12 +1,15 @@
+// noinspection DuplicatedCode
+
 import {expect, test} from "vitest";
 import {defaultWorld, emptyWorld} from "../world.ts";
 import {pointLight} from "../light.ts";
-import {makeColor, makePoint, makeVector} from "../tuple.ts";
+import {black, makeColor, makePoint, makeVector} from "../tuple.ts";
 import Sphere from "../shapes/sphere.ts";
 import {scaling, translation} from "../transformations.ts";
-import Ray from "../ray.ts";
-import Intersection from "../intersection.ts";
+import Ray, {makeRay} from "../ray.ts";
+import Intersection, {makeIntersection} from "../intersection.ts";
 import {compareTuples} from "./helpers.ts";
+import {makePlane} from "../shapes/plane.ts";
 
 test('Creating a world', () => {
     const w = emptyWorld();
@@ -46,7 +49,7 @@ test('Shading an intersection', () => {
     const shape = w.objects[0];
     const i = new Intersection(4, shape);
     const comps = i.prepareComputations(r);
-    const c = w.hitShade(comps);
+    const c = w.shadeHit(comps);
     compareTuples(c, makeColor(0.38066, 0.47583, 0.2855));
 });
 
@@ -57,7 +60,7 @@ test('Shading an intersection from the inside', () => {
     const shape = w.objects[1];
     const i = new Intersection(0.5, shape);
     const comps = i.prepareComputations(r);
-    const c = w.hitShade(comps);
+    const c = w.shadeHit(comps);
     compareTuples(c, makeColor(0.90498, 0.90498, 0.90498));
 });
 
@@ -121,7 +124,7 @@ test('shadeHit() is given an intersection in shadow', () => {
     const r = new Ray(makePoint(0, 0, 5), makeVector(0, 0, 1));
     const i = new Intersection(4, s2);
     const comps = i.prepareComputations(r);
-    const c = w.hitShade(comps);
+    const c = w.shadeHit(comps);
     compareTuples(c, makeColor(0.1, 0.1, 0.1));
 });
 
@@ -134,4 +137,69 @@ test('The hit should offset the point', () => {
     const comps = i.prepareComputations(r);
     expect(comps.overPoint.z).toBeLessThan(-EPSILON / 2);
     expect(comps.point.z).toBeGreaterThan(comps.overPoint.z);
+});
+
+test("The reflected color for a non reflective material", () => {
+    const w = defaultWorld();
+    const r = makeRay(makePoint(0, 0, 0), makeVector(0, 0, 1));
+    const shape = w.objects[1];
+    shape.material.ambient = 1;
+    const i = makeIntersection(1, shape);
+    const comps = i.prepareComputations(r);
+    const color = w.reflectedColor(comps);
+    compareTuples(color, makeColor(0, 0, 0));
+});
+
+test("The reflected color for a reflective material", () => {
+    const w = defaultWorld();
+    const shape = makePlane();
+    shape.material.reflective = 0.5;
+    shape.setTransform(translation(0, -1, 0));
+    w.objects.push(shape);
+    const r = makeRay(makePoint(0, 0, -3), makeVector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+    const i = makeIntersection(Math.sqrt(2), shape);
+    const comps = i.prepareComputations(r);
+    const color = w.reflectedColor(comps);
+    compareTuples(color, makeColor(0.19032, 0.2379, 0.14274));
+});
+
+test("shadeHit() with a reflective material", () => {
+    const w = defaultWorld();
+    const shape = makePlane();
+    shape.material.reflective = 0.5;
+    shape.setTransform(translation(0, -1, 0));
+    w.objects.push(shape);
+    const r = makeRay(makePoint(0, 0, -3), makeVector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+    const i = makeIntersection(Math.sqrt(2), shape);
+    const comps = i.prepareComputations(r);
+    const color = w.shadeHit(comps);
+    compareTuples(color, makeColor(0.87677, 0.92436, 0.82918));
+});
+
+test("colorAt() with mutually reflective surfaces", () => {
+    const w = emptyWorld();
+    w.light = pointLight(makePoint(0, 0, 0), makeColor(1, 1, 1));
+    const lower = makePlane();
+    lower.material.reflective = 1;
+    lower.setTransform(translation(0, -1, 0));
+    w.objects.push(lower);
+    const upper = makePlane();
+    upper.material.reflective = 1;
+    upper.setTransform(translation(0, 1, 0));
+    w.objects.push(upper);
+    const r = makeRay(makePoint(0, 0, 0), makeVector(0, 1, 0));
+    expect(() => w.colorAt(r, 1000000)).toThrow(RangeError);
+});
+
+test("The reflected color at the maximum recursive depth", () => {
+    const w = defaultWorld();
+    const shape = makePlane();
+    shape.material.reflective = 0.5;
+    shape.setTransform(translation(0, -1, 0));
+    w.objects.push(shape);
+    const r = makeRay(makePoint(0, 0, -3), makeVector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+    const i = makeIntersection(Math.sqrt(2), shape);
+    const comps = i.prepareComputations(r);
+    const color = w.reflectedColor(comps, 0);
+    compareTuples(color, black());
 });

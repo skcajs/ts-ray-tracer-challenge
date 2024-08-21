@@ -8,6 +8,7 @@ export type Computations = {
     point: Tuple;
     eyeV: Tuple;
     normalV: Tuple;
+    reflectV: Tuple;
     inside: boolean;
     overPoint: Tuple;
 }
@@ -25,16 +26,15 @@ export default class Intersection {
             normalV = normalV.multiply(-1);
         }
 
-        let overPoint = r.position(this.t).add(normalV.multiply(1e-5));
-
         return {
             t: this.t,
             object: this.object,
             point: r.position(this.t),
             eyeV: eyeV,
             normalV: normalV,
+            reflectV: r.direction.reflect(normalV),
             inside: inside,
-            overPoint: overPoint,
+            overPoint: r.position(this.t).add(normalV.multiply(1e-5)),
         }
     }
 }

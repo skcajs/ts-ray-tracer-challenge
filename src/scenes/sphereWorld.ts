@@ -2,18 +2,16 @@
 
 import {makeSphere} from "../shapes/sphere.ts";
 
-import {black, makeColor, makePoint, makeVector, white} from "../tuple.ts";
+import {makeColor, makePoint, makeVector} from "../tuple.ts";
 import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
 import {viewTransform} from "../transformations.ts";
 import Matrix from "../matrix.ts";
-import {makeStripes} from "../patterns/stripes.ts";
 
 
 const sphereWorld = (): [World, Matrix] => {
 
     const sphere = makeSphere();
-    sphere.material.pattern = makeStripes(white(), black());
 
     const world = emptyWorld();
     world.light = new PointLight(makePoint(-10, 10, -10), makeColor(1, 1, 1));

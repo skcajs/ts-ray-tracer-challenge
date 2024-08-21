@@ -4,11 +4,12 @@ import Pattern from "./patterns/pattern.ts";
 import Shape from "./shapes/shape.ts";
 
 export default class Material {
-    constructor(public color: Tuple = makeColor(1, 1, 1),
-                public ambient: number = 0.1,
-                public diffuse: number = 0.9,
-                public specular: number = 0.9,
-                public shininess: number = 200.0,
+    constructor(public color: Tuple,
+                public ambient: number,
+                public diffuse: number,
+                public specular: number,
+                public shininess: number,
+                public reflective: number,
                 public pattern?: Pattern) {
     }
 
@@ -41,6 +42,6 @@ export default class Material {
 }
 
 export function material() {
-    return new Material();
+    return new Material(makeColor(1, 1, 1), 0.1, 0.9, 0.9, 200.0, 0.0);
 }
 

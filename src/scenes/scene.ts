@@ -1,18 +1,29 @@
 import sphereWorld from "./sphereWorld.ts";
-import spheresWorld from "./spheres.ts";
-import spheresWorld2 from "./spheres2.ts";
+import spheresWorld from "./spheresWorld.ts";
+import spheresWorld2 from "./planeWorld.ts";
 import patternWorld from "./patternWorld.ts";
+import reflectionWorld from "./reflectionWorld.ts";
 
-export default function loadScene(name: string) {
+export enum Scene {
+    SPHERE_WORLD,
+    SPHERES_WORLD,
+    PLANE_WORLD,
+    PATTERN_WORLD,
+    REFLECTION_WORLD
+}
+
+export default function loadScene(name: Scene) {
     switch (name) {
-        case "sphere":
+        case Scene.SPHERE_WORLD:
             return sphereWorld();
-        case "spheres":
+        case Scene.SPHERES_WORLD:
             return spheresWorld();
-        case "spheres2":
+        case Scene.PLANE_WORLD:
             return spheresWorld2();
-        case "pattern":
+        case Scene.PATTERN_WORLD:
             return patternWorld();
+        case Scene.REFLECTION_WORLD:
+            return reflectionWorld();
         default:
             return sphereWorld();
     }

@@ -1,6 +1,6 @@
 import Sphere from "../shapes/sphere.ts";
 import {rotation, scaling, translation, viewTransform} from "../transformations.ts";
-import Material from "../material.ts";
+import {material} from "../material.ts";
 import {black, makeColor, makePoint, makeVector, white} from "../tuple.ts";
 import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
@@ -11,7 +11,7 @@ const spheresWorld = (): [World, Matrix] => {
 
     const floor = new Sphere();
     floor.transform = scaling(10, 0.1, 10);
-    floor.material = new Material();
+    floor.material = material();
     floor.material.color = makeColor(1, 0.9, 0.9);
     floor.material.specular = 0;
     floor.material.pattern = makeStripes(white(), black());
@@ -32,7 +32,7 @@ const spheresWorld = (): [World, Matrix] => {
 
     const middle = new Sphere();
     middle.transform = translation(-0.5, 1, 0.5);
-    middle.material = new Material();
+    middle.material = material();
     middle.material.color = makeColor(0.1, 1, 0.5);
     middle.material.diffuse = 0.7;
     middle.material.specular = 0.3;
@@ -40,7 +40,7 @@ const spheresWorld = (): [World, Matrix] => {
 
     const right = new Sphere();
     right.transform = translation(1.5, 0.5, -0.5).multiply(scaling(0.5, 0.5, 0.5));
-    right.material = new Material();
+    right.material = material();
     right.material.color = makeColor(0.5, 1, 0.1);
     right.material.diffuse = 0.7;
     right.material.specular = 0.3;
@@ -48,7 +48,7 @@ const spheresWorld = (): [World, Matrix] => {
 
     const left = new Sphere();
     left.transform = translation(-1.5, 0.33, -0.75).multiply(scaling(0.33, 0.33, 0.33));
-    left.material = new Material();
+    left.material = material();
     left.material.color = makeColor(1, 0.8, 0.1);
     left.material.diffuse = 0.7;
     left.material.specular = 0.3;

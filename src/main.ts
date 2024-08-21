@@ -1,6 +1,6 @@
 import './style.css'
 import Canvas from './canvas.ts'
-import loadScene from "./scenes/scene.ts";
+import loadScene, {Scene} from "./scenes/scene.ts";
 import {makeCamera} from "./camera.ts";
 
 main();
@@ -11,7 +11,7 @@ function main() {
         400, 200);
 
     const fast = true;
-    const scene = "pattern";
+    const scene = Scene.REFLECTION_WORLD;
 
     if (fast) useWorkers(canvas, scene);
 
@@ -24,7 +24,7 @@ function main() {
     }
 }
 
-function useWorkers(canvas: Canvas, scene: string) {
+function useWorkers(canvas: Canvas, scene: Scene) {
     const numWorkers = navigator.hardwareConcurrency || 4;
     const chunkSize = Math.ceil(canvas.getHeight() / numWorkers);
     const camData = {
