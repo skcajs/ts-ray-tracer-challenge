@@ -23,6 +23,6 @@ export default class TestShape extends Shape {
     }
 }
 
-export function testShape(): TestShape {
+export function makeTestShape(): TestShape {
     return new TestShape();
 }

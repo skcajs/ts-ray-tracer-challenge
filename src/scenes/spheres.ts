@@ -5,7 +5,7 @@ import {black, makeColor, makePoint, makeVector, white} from "../tuple.ts";
 import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
 import Matrix from "../matrix.ts";
-import {stripePattern} from "../pattern.ts";
+import {stripePattern} from "../patterns/pattern.ts";
 
 const spheresWorld = (): [World, Matrix] => {
 

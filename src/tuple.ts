@@ -110,26 +110,26 @@ export function parseColor(t: Tuple): Tuple {
     return new Tuple(t.x, t.y, t.z, 1.0);
 }
 
-export function black(): Tuple {
+export const black = () => {
     return new Tuple(0, 0, 0, 1);
 }
 
-export function white(): Tuple {
+export const white = () => {
     return new Tuple(1, 1, 1, 1);
 }
 
-export function red(): Tuple {
+export const red = () => {
     return new Tuple(1, 0, 0, 1);
 }
 
-export function green(): Tuple {
+export const green = () => {
     return new Tuple(0, 1, 0, 1);
 }
 
-export function blue(): Tuple {
+export const blue = () => {
     return new Tuple(0, 0, 1, 1);
 }
 
-export function purple(): Tuple {
+export const purple = () => {
     return new Tuple(1, 0, 1, 1);
 }

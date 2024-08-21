@@ -8,7 +8,7 @@ import World, {emptyWorld} from "../world.ts";
 import PointLight from "../light.ts";
 import {makePlane} from "../shapes/plane.ts";
 import Matrix from "../matrix.ts";
-import {stripePattern} from "../pattern.ts";
+import {stripePattern} from "../patterns/pattern.ts";
 
 const spheresWorld2 = (): [World, Matrix] => {
 

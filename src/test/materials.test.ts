@@ -3,8 +3,8 @@ import {material} from "../material.ts";
 import {black, makeColor, makePoint, makeVector, white} from "../tuple.ts";
 import PointLight, {pointLight} from "../light.ts";
 import {compareTuples} from "./helpers.ts";
-import {stripePattern} from "../pattern.ts";
 import {makeSphere} from "../shapes/sphere.ts";
+import {makeStripes} from "../patterns/stripes.ts";
 
 test('The default material', () => {
     const m = material();
@@ -83,7 +83,7 @@ test('Lighting with the surface in shadow', () => {
 
 test('Lighting with a pattern applied', () => {
     const m = material();
-    m.pattern = stripePattern(white(), black());
+    m.pattern = makeStripes(white(), black());
     m.ambient = 1;
     m.diffuse = 0;
     m.specular = 0;
