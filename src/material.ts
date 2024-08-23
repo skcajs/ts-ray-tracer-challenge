@@ -10,6 +10,8 @@ export default class Material {
                 public specular: number,
                 public shininess: number,
                 public reflective: number,
+                public transparency: number,
+                public refractiveIndex: number,
                 public pattern?: Pattern) {
     }
 
@@ -42,6 +44,14 @@ export default class Material {
 }
 
 export function material() {
-    return new Material(makeColor(1, 1, 1), 0.1, 0.9, 0.9, 200.0, 0.0);
+    return new Material(
+        makeColor(1, 1, 1),
+        0.1,
+        0.9,
+        0.9,
+        200.0,
+        0.0,
+        0.0,
+        1.0);
 }
 

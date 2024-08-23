@@ -4,6 +4,7 @@ import {makeIntersection} from "../intersection.ts";
 import Intersections from "../intersections.ts";
 import Matrix from "../matrix.ts";
 import Shape from "./shape.ts";
+import {material} from "../material.ts";
 
 export default class Sphere extends Shape {
 
@@ -38,4 +39,12 @@ export default class Sphere extends Shape {
 
 export const makeSphere = () => {
     return new Sphere();
+}
+
+export const glassSphere = () => {
+    const s = new Sphere();
+    s.material = material();
+    s.material.transparency = 1.0;
+    s.material.refractiveIndex = 1.5;
+    return s;
 }

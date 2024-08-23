@@ -1,9 +1,9 @@
-import {expect, test} from 'vitest'
+import {expect, test} from "vitest";
 import {makePoint, makeVector} from "../tuple.ts";
 import Ray from "../ray.ts";
 import {scaling, translation} from "../transformations.ts";
 
-test('Creating a querying a ray', () => {
+test("Creating a querying a ray", () => {
     const origin = makePoint(1, 2, 3);
     const direction = makeVector(4, 5, 6);
 
@@ -12,7 +12,7 @@ test('Creating a querying a ray', () => {
     expect(ray.origin).toEqual(origin);
 });
 
-test('Computing a point from a distance', () => {
+test("Computing a point from a distance", () => {
     const r = new Ray(makePoint(2, 3, 4), makeVector(1, 0, 0));
 
     let expected = makePoint(2, 3, 4);
@@ -28,7 +28,7 @@ test('Computing a point from a distance', () => {
     expect(r.position(2.5)).toEqual(expected);
 });
 
-test('Translating a ray', () => {
+test("Translating a ray", () => {
     const r = new Ray(makePoint(1, 2, 3), makeVector(0, 1, 0));
     const m = translation(3, 4, 5);
     const r2 = r.transform(m);
@@ -37,7 +37,7 @@ test('Translating a ray', () => {
     expect(r2.direction).toEqual(makeVector(0, 1, 0));
 });
 
-test('Scaling a ray', () => {
+test("Scaling a ray", () => {
     const r = new Ray(makePoint(1, 2, 3), makeVector(0, 1, 0));
     const m = scaling(2, 3, 4);
     const r2 = r.transform(m);

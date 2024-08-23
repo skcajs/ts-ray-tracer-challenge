@@ -18,7 +18,19 @@ export default class World {
     }
 
     shadeHit(comps: Computations, depth: number = 1): Tuple {
-        return parseColor(this.reflectedColor(comps, depth).add(comps.object.material.lighting(comps.object, this.light, comps.overPoint, comps.eyeV, comps.normalV, this.isShadowed(comps.overPoint))));
+
+        const surface = comps.object.material.lighting(comps.object, this.light, comps.overPoint, comps.eyeV, comps.normalV, this.isShadowed(comps.overPoint));
+
+        const reflected = this.reflectedColor(comps, depth);
+        const refracted = this.refractedColor(comps, depth);
+
+        const material = comps.object.material;
+
+        if (material.reflective > 0 && material.transparency > 0) {
+            const reflectance = comps.schlick;
+            return parseColor(surface.add(reflected.multiply(reflectance)).add(refracted.multiply(1 - reflectance)));
+        }
+        return parseColor(surface.add(reflected).add(refracted));
     }
 
     reflectedColor(comps: Computations, depth: number = 1): Tuple {
@@ -30,9 +42,28 @@ export default class World {
             .multiply(comps.object.material.reflective));
     }
 
+    refractedColor(comps: Computations, depth: number = 1): Tuple {
+        if (comps.object.material.transparency == 0 || depth == 0) {
+            return black();
+        }
+        const nRatio = comps.n1 / comps.n2;
+        const cosI = comps.eyeV.dot(comps.normalV);
+        const sin2t = nRatio ** 2 * (1 - cosI ** 2);
+        if (sin2t > 1) return black();
+
+        const cosT = Math.sqrt(1.0 - sin2t);
+
+        const direction = comps.normalV.multiply(nRatio * cosI - cosT).subtract(comps.eyeV.multiply(nRatio));
+
+        const refractRay = makeRay(comps.underPoint, direction);
+
+        return this.colorAt(refractRay, depth - 1).multiply(comps.object.material.transparency);
+    }
+
     colorAt(r: Ray, depth: number = 1): Tuple {
-        const hit = this.intersect(r).hit();
-        return hit ? this.shadeHit(hit.prepareComputations(r), depth) : black();
+        const xs = this.intersect(r);
+        const hit = xs.hit();
+        return hit ? this.shadeHit(hit.prepareComputations(r, xs), depth) : black();
     }
 
     isShadowed(point: Tuple): boolean {

@@ -100,3 +100,9 @@ test('Reflectivity for the default material', () => {
     const m = material();
     expect(m.reflective).toBe(0.0);
 });
+
+test('Transparency and Refractive Index for the default material', () => {
+    const m = material();
+    expect(m.transparency).toBe(0.0);
+    expect(m.refractiveIndex).toBe(1.0);
+});
