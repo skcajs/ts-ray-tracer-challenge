@@ -3,13 +3,15 @@ import spheresWorld from "./spheresWorld.ts";
 import spheresWorld2 from "./planeWorld.ts";
 import patternWorld from "./patternWorld.ts";
 import reflectionWorld from "./reflectionWorld.ts";
+import refractionWorld from "./refractionWorld.ts";
 
 export enum Scene {
     SPHERE_WORLD,
     SPHERES_WORLD,
     PLANE_WORLD,
     PATTERN_WORLD,
-    REFLECTION_WORLD
+    REFLECTION_WORLD,
+    REFRACTION_WORLD
 }
 
 export default function loadScene(name: Scene) {
@@ -24,6 +26,8 @@ export default function loadScene(name: Scene) {
             return patternWorld();
         case Scene.REFLECTION_WORLD:
             return reflectionWorld();
+        case Scene.REFRACTION_WORLD:
+            return refractionWorld();
         default:
             return sphereWorld();
     }

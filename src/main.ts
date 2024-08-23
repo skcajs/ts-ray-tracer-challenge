@@ -1,5 +1,5 @@
-import './style.css'
-import Canvas from './canvas.ts'
+import "./style.css";
+import Canvas from "./canvas.ts";
 import loadScene, {Scene} from "./scenes/scene.ts";
 import {makeCamera} from "./camera.ts";
 
@@ -7,11 +7,11 @@ main();
 
 function main() {
     const canvas = new Canvas(
-        document.querySelector<HTMLCanvasElement>('#canvas')!,
+        document.querySelector<HTMLCanvasElement>("#canvas")!,
         400, 200);
 
     const fast = true;
-    const scene = Scene.REFLECTION_WORLD;
+    const scene = Scene.REFRACTION_WORLD;
 
     if (fast) useWorkers(canvas, scene);
 
@@ -34,7 +34,7 @@ function useWorkers(canvas: Canvas, scene: Scene) {
     };
 
     for (let i = 0; i < numWorkers; i++) {
-        const worker = new Worker(new URL('./worker.ts', import.meta.url), {type: 'module'});
+        const worker = new Worker(new URL("./worker.ts", import.meta.url), {type: "module"});
         const startY = i * chunkSize;
 
         worker.postMessage({
