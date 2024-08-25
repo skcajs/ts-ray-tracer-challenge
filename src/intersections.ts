@@ -14,3 +14,11 @@ export default class Intersections extends Array<Intersection> {
         }, null);
     }
 }
+
+export const makeIntersections = (...its: Intersection[]) => {
+    return new Intersections(...its);
+};
+
+export const emptyIntersections = () => {
+    return new Intersections();
+};

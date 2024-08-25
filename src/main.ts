@@ -11,7 +11,7 @@ function main() {
         400, 200);
 
     const fast = true;
-    const scene = Scene.REFRACTION_WORLD;
+    const scene = Scene.CUBE_WORLD;
 
     if (fast) useWorkers(canvas, scene);
 
