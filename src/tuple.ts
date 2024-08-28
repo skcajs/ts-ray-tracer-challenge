@@ -29,7 +29,10 @@ export default class Tuple implements Transformation {
     }
 
     normalize(): Tuple {
-        return new Tuple(this.x / this.magnitude(), this.y / this.magnitude(), this.z / this.magnitude(), this.w / this.magnitude());
+        if (this.magnitude() > 0) {
+            return new Tuple(this.x / this.magnitude(), this.y / this.magnitude(), this.z / this.magnitude(), this.w / this.magnitude());
+        }
+        return new Tuple(this.x, this.y, this.z, this.w);
     }
 
     dot(other: Tuple): number {
@@ -85,8 +88,8 @@ export default class Tuple implements Transformation {
             this.x * 255,
             this.y * 255,
             this.z * 255,
-            this.w * 255,
-        ]
+            this.w * 255
+        ];
     }
 }
 
@@ -112,24 +115,24 @@ export function parseColor(t: Tuple): Tuple {
 
 export const black = () => {
     return new Tuple(0, 0, 0, 1);
-}
+};
 
 export const white = () => {
     return new Tuple(1, 1, 1, 1);
-}
+};
 
 export const red = () => {
     return new Tuple(1, 0, 0, 1);
-}
+};
 
 export const green = () => {
     return new Tuple(0, 1, 0, 1);
-}
+};
 
 export const blue = () => {
     return new Tuple(0, 0, 1, 1);
-}
+};
 
 export const purple = () => {
     return new Tuple(1, 0, 1, 1);
-}
+};
