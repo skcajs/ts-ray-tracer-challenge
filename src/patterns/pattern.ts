@@ -13,7 +13,7 @@ export default abstract class Pattern {
     }
 
     colorAt(worldPoint: Tuple, object: Shape) {
-        const objectPoint = object.transform.inverse().multiplyTuple(worldPoint);
+        const objectPoint = object.worldToObject(worldPoint);
         const patternPoint = this.transform.inverse().multiplyTuple(objectPoint);
 
         return this.localColorAt(patternPoint);
