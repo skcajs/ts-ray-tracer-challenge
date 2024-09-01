@@ -1,7 +1,8 @@
 import Shape from "./shape.ts";
 import Ray from "../ray.ts";
 import Intersections, {emptyIntersections} from "../intersections.ts";
-import Tuple from "../tuple.ts";
+import Tuple, {makePoint} from "../tuple.ts";
+import {Bounds} from "../bounds.ts";
 
 export default class Group extends Shape implements Iterable<Shape> {
 
@@ -44,9 +45,11 @@ export default class Group extends Shape implements Iterable<Shape> {
         this._items[index] = value;
     }
 
-    push(item: Shape): void {
-        item.parent = this;
-        this._items.push(item);
+    push(...items: Shape[]): void {
+        for (let item of items) {
+            item.parent = this;
+        }
+        this._items.push(...items);
     }
 
     pop(): Shape | undefined {
@@ -68,6 +71,35 @@ export default class Group extends Shape implements Iterable<Shape> {
     // Custom method for accessing items directly using indexing
     // This allows group[0] to access the first item
     [index: number]: Shape;
+
+    getBounds(): Bounds {
+        let minBounds: Tuple = makePoint(Infinity, Infinity, Infinity);
+        let maxBounds: Tuple = makePoint(-Infinity, -Infinity, -Infinity);
+
+        for (let item of this._items) {
+            const bounds = item.getBounds();
+            const corners = [
+                makePoint(bounds.minimum.x, bounds.minimum.y, bounds.minimum.z),
+                makePoint(bounds.maximum.x, bounds.minimum.y, bounds.minimum.z),
+                makePoint(bounds.minimum.x, bounds.maximum.y, bounds.minimum.z),
+                makePoint(bounds.minimum.x, bounds.minimum.y, bounds.maximum.z),
+                makePoint(bounds.maximum.x, bounds.maximum.y, bounds.minimum.z),
+                makePoint(bounds.maximum.x, bounds.minimum.y, bounds.maximum.z),
+                makePoint(bounds.minimum.x, bounds.maximum.y, bounds.maximum.z),
+                makePoint(bounds.maximum.x, bounds.maximum.y, bounds.maximum.z)
+            ];
+            for (let corner of corners) {
+                const transformedCorner = item.transform.multiplyTuple(corner);
+                minBounds.x = Math.min(minBounds.x, transformedCorner.x);
+                minBounds.y = Math.min(minBounds.y, transformedCorner.y);
+                minBounds.z = Math.min(minBounds.z, transformedCorner.z);
+                maxBounds.x = Math.max(maxBounds.x, transformedCorner.x);
+                maxBounds.y = Math.max(maxBounds.y, transformedCorner.y);
+                maxBounds.z = Math.max(maxBounds.z, transformedCorner.z);
+            }
+        }
+        return {minimum: minBounds, maximum: maxBounds};
+    }
 }
 
 

@@ -6,6 +6,7 @@ import reflectionWorld from "./reflectionWorld.ts";
 import refractionWorld from "./refractionWorld.ts";
 import cubeWorld from "./cubeWorld.ts";
 import hexagonWorld from "./hexagonWorld.ts";
+import teapotWorld from "./teapotWorld.ts";
 
 export enum Scene {
     SPHERE_WORLD,
@@ -15,7 +16,8 @@ export enum Scene {
     REFLECTION_WORLD,
     REFRACTION_WORLD,
     CUBE_WORLD,
-    HEXAGON_WORLD
+    HEXAGON_WORLD,
+    TEAPOT_WORLD
 }
 
 export default function loadScene(name: Scene) {
@@ -36,6 +38,8 @@ export default function loadScene(name: Scene) {
             return cubeWorld();
         case Scene.HEXAGON_WORLD:
             return hexagonWorld();
+        case Scene.TEAPOT_WORLD:
+            return teapotWorld();
         default:
             return sphereWorld();
     }

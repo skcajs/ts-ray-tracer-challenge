@@ -3,6 +3,7 @@ import Material, {material} from "../material.ts";
 import Ray from "../ray.ts";
 import Tuple from "../tuple.ts";
 import Intersections from "../intersections.ts";
+import {Bounds} from "../bounds.ts";
 
 abstract class Shape {
     transform: Matrix = identity();
@@ -36,9 +37,11 @@ abstract class Shape {
         if (this.parent) {
             normal = this.parent.normalToWorld(normal);
         }
-        
+
         return normal;
     }
+
+    abstract getBounds(): Bounds;
 
     protected abstract localIntersect(localRay: Ray): Intersections;
 

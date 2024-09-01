@@ -1,8 +1,9 @@
 import Intersections, {emptyIntersections, makeIntersections} from "../intersections.ts";
 import Ray from "../ray.ts";
-import Tuple, {makeVector} from "../tuple.ts";
+import Tuple, {makePoint, makeVector} from "../tuple.ts";
 import Shape from "./shape.ts";
 import {makeIntersection} from "../intersection.ts";
+import {Bounds} from "../bounds.ts";
 
 export default class Cube extends Shape {
     constructor() {
@@ -47,6 +48,10 @@ export default class Cube extends Shape {
         if (tMin > tMax) return [tMax, tMin];
 
         return [tMin, tMax];
+    }
+
+    getBounds(): Bounds {
+        return {minimum: makePoint(-1, -1, -1), maximum: makePoint(1, 1, 1)};
     }
 }
 

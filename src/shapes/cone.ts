@@ -2,9 +2,10 @@
 
 import Intersections, {emptyIntersections} from "../intersections.ts";
 import Ray from "../ray.ts";
-import Tuple, {makeVector} from "../tuple.ts";
+import Tuple, {makePoint, makeVector} from "../tuple.ts";
 import Shape from "./shape.ts";
 import {makeIntersection} from "../intersection.ts";
+import {Bounds} from "../bounds.ts";
 
 export default class Cone extends Shape {
 
@@ -75,6 +76,10 @@ export default class Cone extends Shape {
             xs.push(makeIntersection(t, this));
         }
     };
+
+    getBounds(): Bounds {
+        return {minimum: makePoint(-1, this.minimum, -1), maximum: makePoint(1, this.maximum, 1)};
+    }
 }
 
 export const makeCone = (minimum: number = -Infinity, maximum: number = Infinity, closed = false) => {

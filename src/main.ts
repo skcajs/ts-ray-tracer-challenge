@@ -11,7 +11,7 @@ function main() {
         400, 200);
 
     const fast = true;
-    const scene = Scene.HEXAGON_WORLD;
+    const scene = Scene.TEAPOT_WORLD;
 
     if (fast) useWorkers(canvas, scene);
 

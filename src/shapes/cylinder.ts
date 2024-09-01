@@ -1,8 +1,11 @@
+// noinspection DuplicatedCode
+
 import Intersections, {emptyIntersections} from "../intersections.ts";
 import Ray from "../ray.ts";
-import Tuple, {makeVector} from "../tuple.ts";
+import Tuple, {makePoint, makeVector} from "../tuple.ts";
 import Shape from "./shape.ts";
 import {makeIntersection} from "../intersection.ts";
+import {Bounds} from "../bounds.ts";
 
 export default class Cylinder extends Shape {
 
@@ -70,6 +73,10 @@ export default class Cylinder extends Shape {
             xs.push(makeIntersection(t, this));
         }
     };
+
+    getBounds(): Bounds {
+        return {minimum: makePoint(-1, this.minimum, -1), maximum: makePoint(1, this.maximum, 1)};
+    }
 }
 
 export const makeCylinder = (minimum: number = -Infinity, maximum: number = Infinity, closed = false) => {

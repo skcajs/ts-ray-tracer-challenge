@@ -5,6 +5,7 @@ import Intersections from "../intersections.ts";
 import Matrix from "../matrix.ts";
 import Shape from "./shape.ts";
 import {material} from "../material.ts";
+import {Bounds} from "../bounds.ts";
 
 export default class Sphere extends Shape {
 
@@ -35,11 +36,15 @@ export default class Sphere extends Shape {
     localNormalAt(localPoint: Tuple): Tuple {
         return makeVector(localPoint.x, localPoint.y, localPoint.z);
     }
+
+    getBounds(): Bounds {
+        return {minimum: makePoint(-1, -1, -1), maximum: makePoint(1, 1, 1)};
+    }
 }
 
 export const makeSphere = () => {
     return new Sphere();
-}
+};
 
 export const glassSphere = () => {
     const s = new Sphere();
@@ -47,4 +52,4 @@ export const glassSphere = () => {
     s.material.transparency = 1.0;
     s.material.refractiveIndex = 1.5;
     return s;
-}
+};
