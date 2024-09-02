@@ -4,6 +4,14 @@ export default class Tuple implements Transformation {
     constructor(public x: number = 0, public y: number = 0, public z: number = 0, public w: number = 0) {
     }
 
+    get(a: number): number {
+        if (a == 0) return this.x;
+        if (a == 1) return this.y;
+        if (a == 2) return this.z;
+        if (a == 3) return this.w;
+        throw new Error("Tried returning axis that is not defined.");
+    }
+
     add(other: Tuple): Tuple {
         return new Tuple(this.x + other.x, this.y + other.y, this.z + other.z, this.w + other.w);
     }

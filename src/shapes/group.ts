@@ -10,6 +10,8 @@ export default class Group extends Shape implements Iterable<Shape> {
 
     private readonly _items: Shape[];
 
+    // readonly provisions: Shape[] = [];
+
     bounds: Bounds = {
         minimum: makePoint(Infinity, Infinity, Infinity),
         maximum: makePoint(-Infinity, -Infinity, -Infinity)
@@ -110,6 +112,14 @@ export default class Group extends Shape implements Iterable<Shape> {
         return this._items.includes(item);
     }
 
+    items() {
+        return this._items;
+    }
+
+    // setReferences(items: Shape[]) {
+    //     this.provisions.push(...items);
+    // }
+
     // Custom method for accessing items directly using indexing
     // This allows group[0] to access the first item
     [index: number]: Shape;
@@ -150,4 +160,10 @@ export default class Group extends Shape implements Iterable<Shape> {
 export const makeGroup = (...items: Shape[]) => {
     return new Group(...items);
 };
+
+// export const makeReferenceGroup = (...items: Shape[]) => {
+//     const group = new Group();
+//     group.setReferences(items);
+//     return group;
+// };
 

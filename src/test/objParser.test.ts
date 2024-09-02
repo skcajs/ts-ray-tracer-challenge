@@ -64,6 +64,6 @@ test("Converting an OBJ file to a group", () => {
 
 test("That my teapot is rendering", () => {
     const parser = parseObjectFile(teapot);
-    const g = objToGroup(parser);
+    const g = objToGroup(parser, true);
     expect(g.get(0));
 });

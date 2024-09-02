@@ -8,7 +8,7 @@ import Matrix from "../matrix.ts";
 
 const teapotWorld = (): [World, Matrix] => {
     const parser = parseObjectFile(teapot);
-    const teapotGroup = objToGroup(parser);
+    const teapotGroup = objToGroup(parser, true);
     teapotGroup.setTransform(rotation(0, -Math.PI / 2).translate(0, -8, 0));
 
     const world = emptyWorld();
