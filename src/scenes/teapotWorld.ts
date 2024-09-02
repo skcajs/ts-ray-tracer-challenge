@@ -12,7 +12,7 @@ const teapotWorld = (): [World, Matrix] => {
     teapotGroup.setTransform(rotation(0, -Math.PI / 2).translate(0, -8, 0));
 
     const world = emptyWorld();
-    world.light = new PointLight(makePoint(-10, 10, -10), makeColor(1, 1, 1));
+    world.light = new PointLight(makePoint(-20, 20, -20), makeColor(1, 1, 1));
     world.objects = [teapotGroup];
 
     const transform = viewTransform(makePoint(0, 0, -60), makePoint(0, 0, 0), makeVector(0, 1, 0));
