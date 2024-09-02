@@ -4,6 +4,7 @@ import Ray from "../ray.ts";
 import Tuple from "../tuple.ts";
 import Intersections from "../intersections.ts";
 import {Bounds} from "../bounds.ts";
+import Intersection from "../intersection.ts";
 
 abstract class Shape {
     transform: Matrix = identity();
@@ -18,8 +19,8 @@ abstract class Shape {
         return this.localIntersect(ray.transform(this.transform.inverse()));
     }
 
-    normalAt(point: Tuple): Tuple {
-        return this.normalToWorld(this.localNormalAt(this.worldToObject(point)));
+    normalAt(point: Tuple, i?: Intersection): Tuple {
+        return this.normalToWorld(this.localNormalAt(this.worldToObject(point), i));
     }
 
     worldToObject(point: Tuple) {
@@ -45,7 +46,7 @@ abstract class Shape {
 
     protected abstract localIntersect(localRay: Ray): Intersections;
 
-    protected abstract localNormalAt(localPoint: Tuple): Tuple;
+    protected abstract localNormalAt(localPoint: Tuple, i?: Intersection): Tuple;
 }
 
 export default Shape;

@@ -1,51 +1,75 @@
 // import {readFileSync} from "fs";
-import Tuple, {makePoint} from "../tuple.ts";
+import Tuple, {makePoint, makeVector} from "../tuple.ts";
 import Group, {makeGroup} from "./group.ts";
 import Triangle, {makeTriangle} from "./triangle.ts";
 import Shape from "./shape.ts";
 import {Bounds} from "../bounds.ts";
+import {makeSmoothTriangle} from "./smoothTriangle.ts";
 
 export const parseObjectFile = (fileContent: string) => {
     let currentGroup: string = "defaultGroup";
     const parser: { [key: string]: any } = {};
     const vertices: Tuple[] = [];
+    const normals: Tuple[] = [];
     let ignored = 0;
     const lines = fileContent.split("\n");
+    let useVn = false;
 
     for (let line of lines) {
-        if (line.startsWith("v")) {
+        if (line.startsWith("v ")) {
             const v = line.split(" ");
             vertices.push(makePoint(parseFloat(v[1]), parseFloat(v[2]), parseFloat(v[3])));
             continue;
         }
-        if (line.startsWith("g")) {
+        if (line.startsWith("vn ")) {
+            const vn = line.split(" ");
+            normals.push(makeVector(parseFloat(vn[1]), parseFloat(vn[2]), parseFloat(vn[3])));
+            useVn = true;
+        }
+        if (line.startsWith("g ")) {
             currentGroup = line.split(" ")[1];
         }
-        if (line.startsWith("f")) {
+        if (line.startsWith("f ")) {
             let group = parser[currentGroup];
             if (!group) {
                 group = makeGroup();
             }
-            const f = line.split(" ").map(item => item.split("/")[0]);
-            if (f.length == 4) {
-                group.push(makeTriangle(vertices[parseInt(f[1]) - 1], vertices[parseInt(f[2]) - 1], vertices[parseInt(f[3]) - 1]));
+            const fv = line.split(" ").map(item => item.split("/")[0]);
+            const fvn = line.split(" ").map(item => item.split("/")[2]);
+            if (fv.length == 4) {
+                if (useVn) {
+                    group.push(makeSmoothTriangle(vertices[parseInt(fv[1]) - 1], vertices[parseInt(fv[2]) - 1], vertices[parseInt(fv[3]) - 1], normals[parseInt(fvn[1]) - 1], normals[parseInt(fvn[2]) - 1], normals[parseInt(fvn[3]) - 1]));
+                } else {
+                    group.push(makeTriangle(vertices[parseInt(fv[1]) - 1], vertices[parseInt(fv[2]) - 1], vertices[parseInt(fv[3]) - 1]));
+                }
+
                 parser[currentGroup] = group;
             } else {
-                group.push(...fanTriangulation(vertices, f));
+                group.push(...fanTriangulation(vertices, normals, fv, fvn, useVn));
                 parser[currentGroup] = group;
             }
         }
         ignored++;
     }
+    parser.normals = normals;
     parser.vertices = vertices;
     parser.ignored = ignored;
     return parser;
 };
 
-const fanTriangulation = (vertices: Tuple[], f: string[]) => {
+const fanTriangulation = (vertices: Tuple[], normals: Tuple[], fv: string[], fvn: string[], useVn: boolean) => {
     const triangles: Shape[] = [];
-    for (let i = 2; i < f.length - 1; ++i) {
-        const tri = makeTriangle(vertices[parseInt(f[1]) - 1], vertices[parseInt(f[i]) - 1], vertices[parseInt(f[i + 1]) - 1]);
+    for (let i = 2; i < fv.length - 1; ++i) {
+        let tri;
+        if (useVn) {
+            tri = makeSmoothTriangle(
+                vertices[parseInt(fv[1]) - 1], vertices[parseInt(fv[2]) - 1],
+                vertices[parseInt(fv[3]) - 1], normals[parseInt(fvn[1]) - 1],
+                normals[parseInt(fvn[2]) - 1], normals[parseInt(fvn[3]) - 1]);
+        } else {
+            tri = makeTriangle(vertices[parseInt(fv[1]) - 1], vertices[parseInt(fv[i]) - 1], vertices[parseInt(fv[i + 1]) - 1]);
+        }
+
         triangles.push(tri);
     }
     return triangles;
@@ -57,15 +81,13 @@ export const objToGroup = (parser: { [key: string]: any }, autoGroups: boolean =
     if (autoGroups) {
         const defaultGroup = parser["defaultGroup"] as Group;
         group.push(splitTriangles(makeGroup(), defaultGroup));
-        console.log("finished sorting");
     } else {
         for (let key in parser) {
-            if (key != "vertices" && key != "ignored") {
+            if (key != "vertices" && key != "normals" && key != "ignored") {
                 group.push(parser[key]);
             }
         }
     }
-
     return group;
 };
 
@@ -108,7 +130,7 @@ const splitTriangles = (group: Group, referenceGroup: Group): Group => {
     const bounds = referenceGroup.bounds;
     const triangles = referenceGroup.items() as Triangle[];
 
-    if (triangles.length <= 8) {
+    if (triangles.length <= 18) {
         group.push(...triangles);
     } else {
         const axis = getAxisOfLargestExtent(bounds);
@@ -130,4 +152,3 @@ const splitTriangles = (group: Group, referenceGroup: Group): Group => {
     }
     return group;
 };
-

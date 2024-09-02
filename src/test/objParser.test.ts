@@ -3,7 +3,7 @@
 import {test, expect} from "vitest";
 import {objToGroup, parseObjectFile} from "../shapes/parser.ts";
 import {compareTuples} from "./helpers.ts";
-import {makePoint} from "../tuple.ts";
+import {makePoint, makeVector} from "../tuple.ts";
 import Triangle from "../shapes/triangle.ts";
 import Group from "../shapes/group.ts";
 
@@ -11,6 +11,8 @@ import gibberish from "./src/test/data/gibberish.txt?raw";
 import vertex from "./src/test/data/vertexRecords.txt?raw";
 import triangleFaces from "./src/test/data/triangleFaces.txt?raw";
 import objects from "./src/test/data/objects.txt?raw";
+import vertexNormals from "./src/test/data/vertexNormals.txt?raw";
+import facesWithNormals from "./src/test/data/facesWithNormals.txt?raw";
 import teapot from "./src/test/data/teapot.txt?raw";
 
 test("Ignoring unrecognized lines", () => {
@@ -61,6 +63,28 @@ test("Converting an OBJ file to a group", () => {
     expect(g.get(0)).toEqual(parser.FirstGroup);
     expect(g.get(1)).toEqual(parser.SecondGroup);
 });
+
+test("Vertex normal records", () => {
+    const parser = parseObjectFile(vertexNormals);
+    compareTuples(parser.normals[0], makeVector(0, 0, 1));
+    compareTuples(parser.normals[1], makeVector(0.707, 0, -0.707));
+    compareTuples(parser.normals[2], makeVector(1, 2, 3));
+});
+
+test("Faces with normals", () => {
+    const parser = parseObjectFile(facesWithNormals);
+    const g = parser.defaultGroup;
+    const t1 = g.get(0);
+    const t2 = g.get(1);
+    compareTuples(t1.p1, parser.vertices[0]);
+    compareTuples(t1.p2, parser.vertices[1]);
+    compareTuples(t1.p3, parser.vertices[2]);
+    compareTuples(t1.n1, parser.normals[2]);
+    compareTuples(t1.n2, parser.normals[0]);
+    compareTuples(t1.n3, parser.normals[1]);
+    expect(t2).toEqual(t1);
+});
+
 
 test("That my teapot is rendering", () => {
     const parser = parseObjectFile(teapot);

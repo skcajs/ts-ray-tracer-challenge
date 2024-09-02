@@ -2,7 +2,7 @@ import Intersections, {emptyIntersections} from "../intersections.ts";
 import Ray from "../ray.ts";
 import Tuple, {makePoint} from "../tuple.ts";
 import Shape from "./shape.ts";
-import {makeIntersection} from "../intersection.ts";
+import Intersection, {makeIntersection} from "../intersection.ts";
 import {Bounds} from "../bounds.ts";
 
 export default class Triangle extends Shape {
@@ -33,12 +33,12 @@ export default class Triangle extends Shape {
         if (v < 0 || (u + v) > 1) return xs;
 
         const t = f * this.e2.dot(originCrossE1);
-        xs.push(makeIntersection(t, this));
+        xs.push(makeIntersection(t, this, u, v));
         return xs;
     }
 
     // @ts-ignore
-    protected localNormalAt(localPoint: Tuple): Tuple {
+    protected localNormalAt(localPoint: Tuple, i?: Intersection): Tuple {
         return this.normal;
     }
 

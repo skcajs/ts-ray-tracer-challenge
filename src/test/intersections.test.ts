@@ -11,6 +11,7 @@ import {makePlane} from "../shapes/plane.ts";
 import {scaling, translation} from "../transformations.ts";
 import {defaultWorld} from "../world.ts";
 import {makeTestPattern} from "../patterns/testPattern.ts";
+import {makeSmoothTriangle} from "../shapes/smoothTriangle.ts";
 
 test("An intersection encapsulates t and object", () => {
     const s = new Sphere();
@@ -261,4 +262,14 @@ test("shadeHit() with a reflective, transparent material", () => {
     const comps = xs[0].prepareComputations(r, xs);
     const c = w.shadeHit(comps, 5);
     compareTuples(c, makeColor(0.93391, 0.69643, 0.69643));
+});
+
+test("An intersection can encapsulate u and v", () => {
+    const p1 = makePoint(0, 1, 0);
+    const p2 = makePoint(-1, 0, 0);
+    const p3 = makePoint(1, 0, 0);
+    const tri = makeSmoothTriangle(p1, p2, p3);
+    const i = makeIntersection(3.5, tri, 0.2, 0.4);
+    expect(i.u).toBe(0.2);
+    expect(i.v).toBe(0.4);
 });

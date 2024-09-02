@@ -19,7 +19,8 @@ export type Computations = {
 }
 
 export default class Intersection {
-    constructor(public t: number, public object: Shape) {
+
+    constructor(public t: number, public object: Shape, public u: number | undefined = undefined, public v: number | undefined = undefined) {
     }
 
     prepareComputations(r: Ray, xs?: Intersections): Computations {
@@ -48,8 +49,7 @@ export default class Intersection {
             }
         }
 
-
-        let normalV = this.object.normalAt(r.position(this.t));
+        let normalV = this.object.normalAt(r.position(this.t), this);
         let eyeV = r.direction.multiply(-1);
         let inside = false;
         if (normalV.dot(eyeV) < 0) {
@@ -85,7 +85,7 @@ export default class Intersection {
     }
 }
 
-export const makeIntersection = (t: number, shape: Shape) => {
-    return new Intersection(t, shape);
+export const makeIntersection = (t: number, shape: Shape, u: number | undefined = undefined, v: number | undefined = undefined) => {
+    return new Intersection(t, shape, u, v);
 };
 
