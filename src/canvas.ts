@@ -6,14 +6,14 @@ export default class Canvas {
 
     constructor(canvas: HTMLCanvasElement, canvasWidth: number, canvasHeight: number) {
         this.canvas = canvas;
-        const ctx = this.canvas.getContext('2d');
+        const ctx = this.canvas.getContext("2d");
         if (!ctx) {
-            throw new Error('Failed to get 2D context from canvas');
+            throw new Error("Failed to get 2D context from canvas");
         }
         this.ctx = ctx;
         this.canvas.width = canvasWidth;
         this.canvas.height = canvasHeight;
-        this.ctx.fillStyle = 'rgb(0,0,0)'
+        this.ctx.fillStyle = "rgb(0,0,0)";
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     }
 
@@ -50,5 +50,6 @@ export default class Canvas {
         const imageData = this.ctx.createImageData(this.getWidth(), chunkSize);
         imageData.data.set(image);
         this.ctx.putImageData(imageData, 0, dy);
+        console.log("done");
     }
 }

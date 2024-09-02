@@ -14,7 +14,7 @@ const teapotWorld = (): [World, Matrix] => {
     world.light = new PointLight(makePoint(-10, 10, -10), makeColor(1, 1, 1));
     world.objects = [group];
 
-    const transform = viewTransform(makePoint(0, 0, -5), makePoint(0, 1, 0), makeVector(0, 1, 0));
+    const transform = viewTransform(makePoint(-30, -30, -30), makePoint(0, 0, 0), makeVector(0, 1, 0));
 
     return [world, transform];
 };

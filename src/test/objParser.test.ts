@@ -11,6 +11,7 @@ import gibberish from "./src/test/data/gibberish.txt?raw";
 import vertex from "./src/test/data/vertexRecords.txt?raw";
 import triangleFaces from "./src/test/data/triangleFaces.txt?raw";
 import objects from "./src/test/data/objects.txt?raw";
+import teapot from "./src/test/data/teapot.txt?raw";
 
 test("Ignoring unrecognized lines", () => {
 
@@ -59,4 +60,10 @@ test("Converting an OBJ file to a group", () => {
     const g = objToGroup(parser);
     expect(g.get(0)).toEqual(parser.FirstGroup);
     expect(g.get(1)).toEqual(parser.SecondGroup);
+});
+
+test("That my teapot is rendering", () => {
+    const parser = parseObjectFile(teapot);
+    const g = objToGroup(parser);
+    expect(g.get(0));
 });

@@ -10,7 +10,6 @@ export const parseObjectFile = (fileContent: string) => {
     const vertices: Tuple[] = [];
     let ignored = 0;
     const lines = fileContent.split("\n");
-    ;
 
     for (let line of lines) {
         if (line.startsWith("v")) {
@@ -19,20 +18,19 @@ export const parseObjectFile = (fileContent: string) => {
             continue;
         }
         if (line.startsWith("g")) {
-            const g = line.split(" ");
-            currentGroup = g[1];
+            currentGroup = line.split(" ")[1];
         }
         if (line.startsWith("f")) {
             let group = parser[currentGroup];
             if (!group) {
                 group = makeGroup();
             }
-            const f = line.split(" ");
+            const f = line.split(" ").map(item => item.split("/")[0]);
             if (f.length == 4) {
                 group.push(makeTriangle(vertices[parseInt(f[1]) - 1], vertices[parseInt(f[2]) - 1], vertices[parseInt(f[3]) - 1]));
                 parser[currentGroup] = group;
             } else {
-                group.push(...fanTriangulation(vertices));
+                group.push(...fanTriangulation(vertices, f));
                 parser[currentGroup] = group;
             }
         }
@@ -43,10 +41,10 @@ export const parseObjectFile = (fileContent: string) => {
     return parser;
 };
 
-const fanTriangulation = (vertices: Tuple[]) => {
+const fanTriangulation = (vertices: Tuple[], f: string[]) => {
     const triangles: Shape[] = [];
-    for (let i = 1; i < vertices.length - 1; ++i) {
-        const tri = makeTriangle(vertices[0], vertices[i], vertices[i + 1]);
+    for (let i = 2; i < f.length - 1; ++i) {
+        const tri = makeTriangle(vertices[parseInt(f[1]) - 1], vertices[parseInt(f[i]) - 1], vertices[parseInt(f[i + 1]) - 1]);
         triangles.push(tri);
     }
     return triangles;
