@@ -268,7 +268,7 @@ test("An intersection can encapsulate u and v", () => {
     const p1 = makePoint(0, 1, 0);
     const p2 = makePoint(-1, 0, 0);
     const p3 = makePoint(1, 0, 0);
-    const tri = makeSmoothTriangle(p1, p2, p3);
+    const tri = makeSmoothTriangle(p1, p2, p3, p1, p2, p3);
     const i = makeIntersection(3.5, tri, 0.2, 0.4);
     expect(i.u).toBe(0.2);
     expect(i.v).toBe(0.4);
