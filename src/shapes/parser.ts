@@ -1,4 +1,6 @@
 // import {readFileSync} from "fs";
+// noinspection DuplicatedCode
+
 import Tuple, {makePoint, makeVector} from "../tuple.ts";
 import Group, {makeGroup} from "./group.ts";
 import Triangle, {makeTriangle} from "./triangle.ts";
@@ -63,9 +65,9 @@ const fanTriangulation = (vertices: Tuple[], normals: Tuple[], fv: string[], fvn
         let tri;
         if (useVn) {
             tri = makeSmoothTriangle(
-                vertices[parseInt(fv[1]) - 1], vertices[parseInt(fv[2]) - 1],
-                vertices[parseInt(fv[3]) - 1], normals[parseInt(fvn[1]) - 1],
-                normals[parseInt(fvn[2]) - 1], normals[parseInt(fvn[3]) - 1]);
+                vertices[parseInt(fv[1]) - 1], vertices[parseInt(fv[i]) - 1],
+                vertices[parseInt(fv[i + 1]) - 1], normals[parseInt(fvn[1]) - 1],
+                normals[parseInt(fvn[i]) - 1], normals[parseInt(fvn[i + 1]) - 1]);
         } else {
             tri = makeTriangle(vertices[parseInt(fv[1]) - 1], vertices[parseInt(fv[i]) - 1], vertices[parseInt(fv[i + 1]) - 1]);
         }
